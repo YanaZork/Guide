@@ -14,7 +14,9 @@ const Home = () => {
     <>
       <div>Home</div>
       {brands.map((brand) => (
-        <span>{brand.name}</span>
+        <span key={brand.name}>
+          {brand.name}
+        </span>
       ))}
     </>
   );
