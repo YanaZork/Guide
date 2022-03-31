@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Brand from './pages/Brand';
 import Home from './pages/Home';
@@ -9,6 +9,12 @@ function App() {
   const firebaseApp = useMemo(() => {
     return new FirebaseApp();
   }, []);
+
+  useEffect(() => {
+    return () => {
+      firebaseApp.destroy();
+    };
+  }, [firebaseApp]);
 
   return (
     <Routes>

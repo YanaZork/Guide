@@ -15,4 +15,7 @@ export default class FirebaseApplication {
     };
     this.app = initializeApp(firebaseConfig);
   }
+
+  destroy = (): void => {
+  }
 }
