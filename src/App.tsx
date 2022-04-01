@@ -4,6 +4,7 @@ import Brand from './pages/Brand';
 import Home from './pages/Home';
 import Header from './components/header';
 import FirebaseApp from './api/implementation/firebase/firebaseApp';
+import Footer from './components/footer';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
       <Route path='/' element={<Home />} />
       <Route path='brand' element={<Brand />} />
     </Routes>
+    <Footer />
     </>
   );
 }
