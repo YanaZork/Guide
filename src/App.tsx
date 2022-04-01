@@ -7,7 +7,6 @@ import FirebaseApp from './api/implementation/firebase/firebaseApp';
 import Footer from './components/footer';
 
 function App() {
-
   const firebaseApp = useMemo(() => {
     return new FirebaseApp();
   }, []);
@@ -20,12 +19,12 @@ function App() {
 
   return (
     <>
-    <Header />
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='brand' element={<Brand />} />
-    </Routes>
-    <Footer />
+      <Header />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='brand' element={<Brand />} />
+      </Routes>
+      <Footer />
     </>
   );
 }
