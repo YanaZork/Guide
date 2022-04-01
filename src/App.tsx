@@ -3,8 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import Brand from './pages/Brand';
 import Home from './pages/Home';
 import Header from './components/header';
-import FirebaseApp from './api/implementation/firebase/firebaseApp';
 import Footer from './components/footer';
+import FirebaseApp from './api/implementation/firebase/firebaseApp';
 
 function App() {
   const firebaseApp = useMemo(() => {
