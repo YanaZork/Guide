@@ -1,12 +1,11 @@
 import styled from 'styled-components'
 
+import { Link } from "react-router-dom";
 import { ReactComponent as LikeSvg } from '../.././svg/like.svg';
 import { useEffect, useState } from 'react';
 import { getBrands } from '../.././api/service/brands/brands';
 import { Brand } from '../.././types/Brand';
 import "@fontsource/jost"
-import "@fontsource/josefin-slab"
-import "@fontsource/jura"
 
 const Grid = styled.div`
   margin: 20px 10%;
@@ -15,18 +14,19 @@ const Grid = styled.div`
   grid-auto-rows: minmax(240px, 1fr);;
 `;
 
-// Это должна быть ссылка на brand
 const Element = styled.div`
   margin: -1px;
   background: wight;
-  border: 3px solid #aaa;
+  border: 2px solid #aaa;
   position: relative;
+  cursor: pointer;
 `;
 
 const Text = styled.p`
   font-size: 21px;
   color: #007934;
   text-align: center;
+  font-family: Jost;
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -35,6 +35,7 @@ const Wrapper = styled.div`
 `;
 const Img = styled.img`
   width:200px;
+  margin: 5px;
 `;
 const Like = styled.div`
   position: absolute;
@@ -57,11 +58,13 @@ const GridItem = () => {
       <Grid>
         {brands.map((brand) => (
           <Element key={brand.name}>
-            <Text>{brand.name}</Text>
-            <Wrapper>
-              <Img src={brand.logo} />
-            </Wrapper>
-            <Like><LikeSvg /></Like>
+            <Link to={'/brand/'+ brand.name}>
+              <Text>{brand.name}</Text>
+              <Wrapper>
+                <Img src={brand.logo} />
+              </Wrapper>
+              <Like><LikeSvg /></Like>
+            </Link>
           </Element>
         ))}
       </Grid>
