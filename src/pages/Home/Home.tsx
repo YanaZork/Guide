@@ -1,14 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { useState } from 'react';
 
 import styled from 'styled-components';
 import Alphabetically from '../../components/sorting/alphabetically';
 import ByCountry from '../../components/sorting/by_country';
+import { Filter } from '../../types/Filter.enum';
 
 import '@fontsource/jost';
 import '@fontsource/josefin-slab';
 import '@fontsource/jura';
-import { Filter } from '../../types/Filter.enum';
+
 
 const Box = styled.div`
   display: flex;
