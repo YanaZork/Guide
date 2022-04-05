@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import styled from 'styled-components';
@@ -8,6 +8,7 @@ import ByCountry from '../../components/sorting/by_country';
 import '@fontsource/jost';
 import '@fontsource/josefin-slab';
 import '@fontsource/jura';
+import { Filter } from '../../types/Filter.enum';
 
 const Box = styled.div`
   display: flex;
@@ -34,27 +35,20 @@ const Hr = styled.hr`
 	border-bottom: 2px solid #aaa;
 `
 
-
 function Home() {
+
+  const [filter, setFilter] = useState<Filter>(Filter.byAlphabetically);
 
   return (
     <>
       <Box>
-        <P>по алфавиту</P>
-        <P>по странам</P>
+        <P onClick={() => { setFilter(Filter.byAlphabetically) }}>по алфавиту</P>
+        <P onClick={() => { setFilter(Filter.byCountry) }}>по странам</P>
       </Box>
       <Hr />
-      <Routes>
-        <Route path='/' element={<Alphabetically />} />
-        <Route path='by-country' element={<ByCountry />} />
-      </Routes>
+      {filter == Filter.byAlphabetically ? <Alphabetically /> : <ByCountry />}
     </>
   );
 }
 
 export default Home;
-
-/*
-<Alphabetically />
-<ByCountry />
-*/
