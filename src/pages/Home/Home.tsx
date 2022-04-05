@@ -23,6 +23,10 @@ const P = styled.p`
   font-weight: 400;
   padding: 10px 10%;
   cursor: pointer;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
   &:hover {
     transition: all 0.3s ease;
     color: #38930D;
@@ -46,7 +50,7 @@ function Home() {
         <P onClick={() => { setFilter(Filter.byCountry) }}>по странам</P>
       </Box>
       <Hr />
-      {filter == Filter.byAlphabetically ? <Alphabetically /> : <ByCountry />}
+      {filter === Filter.byAlphabetically ? <Alphabetically /> : <ByCountry />}
     </>
   );
 }
