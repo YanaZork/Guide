@@ -12,6 +12,10 @@ const Global = createGlobalStyle`
   margin: 0;
   padding: 0;
 }
+a {
+  text-decoration:none;
+  color: #000;
+}
 `
 const rootElement = document!.getElementById("root");
 const root = createRoot(rootElement as HTMLElement);
