@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Brand from './pages/Brand';
+import BrandPage from './pages/Brand';
 import Home from './pages/Home';
 import Header from './components/header';
-import Footer from './components/footer';
+//import Footer from './components/footer';
 import FirebaseApp from './api/implementation/firebase/firebaseApp';
 
 function App() {
@@ -22,9 +22,9 @@ function App() {
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='brand' element={<Brand />} />
+        <Route path='brand/:name' element={<BrandPage />} />
+        <Route path="*" element={<Home />} />
       </Routes>
-      <Footer />
     </>
   );
 }

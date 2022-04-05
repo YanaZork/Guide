@@ -9,7 +9,8 @@ export const getBrands = async (): Promise<Brand[]> => {
         brands.push({
             name: doc.data().name,
             logo: doc.data().logo,
-            info: doc.data().info
+            info: doc.data().info,
+            models: doc.data().models
         })
     });
     return brands;
