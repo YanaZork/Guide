@@ -27,9 +27,6 @@ const Title = styled.h1`
   font-family: Josefin Slab;
   font-size: 64px;
   font-weight: 400;
-  line-height: 64px;
-  letter-spacing: 0em;
-  text-align: left;
 `;
 const TextLogo = styled.p`
   font-family: Jura;

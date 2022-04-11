@@ -58,7 +58,7 @@ const GridItem = () => {
       <Grid>
         {brands.map((brand) => (
           <Element key={brand.name}>
-            <Link to={'/brand/'+ brand.name}>
+            <Link to={brand.name}>
               <Text>{brand.name}</Text>
               <Wrapper>
                 <Img src={brand.logo} />
