@@ -4,6 +4,7 @@ import { ReactComponent as MagnifierSvg } from '../../svg/magnifier.svg';
 import '@fontsource/jost';
 import '@fontsource/josefin-slab';
 import '@fontsource/jura';
+import { Link } from 'react-router-dom';
 
 const HeaderStyle = styled.header`
   display: flex;
@@ -44,6 +45,7 @@ const LogIn = styled.p`
   font-weight: 400;
   margin-right: 5px;
   cursor: pointer;
+  color: #fff;
 `;
 
 const Form = styled.form`
@@ -92,7 +94,7 @@ const Header = () => {
         </Form>
 
         <Box>
-          <LogIn>log in</LogIn>
+          <Link to="/authorization"><LogIn>log in</LogIn></Link>
           <LogInSvg />
         </Box>
       </Box>

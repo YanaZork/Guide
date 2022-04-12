@@ -5,6 +5,12 @@ import Home from './pages/Home';
 import Header from './components/header';
 import Footer from './components/footer';
 import FirebaseApp from './api/implementation/firebase/firebaseApp';
+import Login from './components/authorization/Login';
+import Dashboard from './components/authorization/Dashboard';
+import Register from './components/authorization/Register';
+import Reset from './components/authorization/Reset';
+import Authorization from './components/authorization';
+
 
 function App() {
   const firebaseApp = useMemo(() => {
@@ -19,12 +25,14 @@ function App() {
 
   return (
     <>
-      <Header />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='brand' element={<Brand />} />
+        <Route path='authorization' element={<Authorization />} />
+
+        <Route path='reset' element={<Reset />} />
+        <Route path='dashboard' element={<Dashboard />} />
       </Routes>
-      <Footer />
     </>
   );
 }
