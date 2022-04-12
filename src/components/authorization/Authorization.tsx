@@ -76,7 +76,7 @@ const P = styled.p`
   }
 `;
 const Hr = styled.hr`
-  margin: 20px 0px;
+  margin: 10px 0px 20px 0px;
 	border: none;
 	border-bottom: 1px solid #000;
 `;
@@ -93,18 +93,16 @@ function Reset() {
             справочник
             <br /> автомобильных марок
           </TextLogo>
-          
         </BoxLogo>
         <Container>
           <BoxList>
-          
-        <P onClick={() => { setAuthorization(Authorization.byLogin) }}>Вход</P>
-        <P onClick={() => { setAuthorization(Authorization.byRegister) }}>Регистрирация</P>
-        <Link to="/" ><CrossSvg style={{ stroke:'black' }}/></Link>
-        </BoxList>
-        <Hr />
-        {authorization === Authorization.byLogin ? <Login /> : <Register />}
-      </Container>
+            <P onClick={() => { setAuthorization(Authorization.byLogin) }}>Вход</P>
+            <P onClick={() => { setAuthorization(Authorization.byRegister) }}>Регистрирация</P>
+            <Link to="/" ><CrossSvg style={{ stroke: 'black' }} /></Link>
+          </BoxList>
+          <Hr />
+          {authorization === Authorization.byLogin ? <Login /> : <Register />}
+        </Container>
       </Box>
     </>
   );

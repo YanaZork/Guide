@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from 'styled-components';
+import { ReactComponent as GoogleIconSvg } from '../../../svg/google-icon.svg';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -8,21 +9,53 @@ import {
     signInWithGoogle,
 } from "../../../api/implementation/firebase/firebaseApp";
 
+import '@fontsource/jost';
+import '@fontsource/jura';
+
 const Text = styled.input`
-    padding: 10px;
-    font-size: 18px;
-    margin-bottom: 10px;
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 18px;
+  font-family: jost;
+  font-weight: 500;
+  border: 0;
+  background: #E3E3E3;
+  &:valid  {
+    background: #E8F0FE;
+  }
+`;
+const Greed = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 `;
 const Button = styled.button`
-    padding: 10px;
-    font-size: 18px;
-    margin-bottom: 10px;
-    border: none;
-    color: white;
-    background-color: black;
-  &.google {
-    background-color: #4285f4;
+  margin: 0px 10px 0px 0px;  
+  padding: 10px;
+  font-size: 24px;
+  margin-bottom: 10px;
+  border: none;
+  color: white;
+  background-color: #38930D;
+  border-radius: 5px;
+  font-family: Jura;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  &:hover {
+    background-color: #007934;
   }
+`;
+const P = styled.p`
+  font-family: Jura;
+  font-size: 18px;
+  font-weight: 400;
+  cursor: default;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 `;
 
 const Register = () => {
@@ -46,32 +79,27 @@ const Register = () => {
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Full Name"
+                    placeholder="Name"
+                    required
                 />
                 <Text
                     type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="E-mail Address"
+                    placeholder="E-mail"
+                    required
                 />
                 <Text
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
+                    required
                 />
                 <Button  onClick={register}>
                     Зарегистрировать
                 </Button>
-                <Button
-                    className="google"
-                    onClick={signInWithGoogle}
-                >
-                    Зарегистрируйтесь через Google
-                </Button>
-                <div>
-                    У вас уже есть учетная запись? <Link to="/login">Войти.</Link>
-                </div>
+                <P> Зарегистрируйтесь через <GoogleIconSvg onClick={signInWithGoogle} style={{ cursor: 'pointer', marginLeft: '7px' }}/></P>
         </>
     );
 }

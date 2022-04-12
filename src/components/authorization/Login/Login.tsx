@@ -7,7 +7,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 import '@fontsource/jost';
-import '@fontsource/josefin-slab';
 import '@fontsource/jura';
 
 const Text = styled.input`
@@ -16,19 +15,18 @@ const Text = styled.input`
   border-radius: 50px;
   text-align: center;
   font-size: 18px;
-  font-family: Josefin Slab;
-  font-weight: 700;
+  font-family: jost;
+  font-weight: 500;
   border: 0;
   background: #E3E3E3;
-  &:required {
+  &:valid  {
     background: #E8F0FE;
   }
 `;
-
 const Greed = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-`
+`;
 const Button = styled.button`
   margin: 0px 10px 0px 0px;  
   padding: 10px;
@@ -51,7 +49,7 @@ const P = styled.p`
   font-size: 18px;
   font-weight: 400;
   cursor: default;
-`
+`;
 
 function Login() {
 
@@ -73,14 +71,14 @@ function Login() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="E-mail"
-        required 
+        required
       />
       <Text
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
-        required 
+        required
       />
       <Greed>
         <Button
