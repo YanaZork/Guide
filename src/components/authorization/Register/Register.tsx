@@ -4,9 +4,9 @@ import { ReactComponent as GoogleIconSvg } from '../../../svg/google-icon.svg';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import {
-    auth,
-    registerWithEmailAndPassword,
-    signInWithGoogle,
+  auth,
+  registerWithEmailAndPassword,
+  signInWithGoogle,
 } from "../../../api/implementation/firebase/firebaseApp";
 
 import '@fontsource/jost';
@@ -25,13 +25,16 @@ const Text = styled.input`
   &:valid  {
     background: #E8F0FE;
   }
+  &::selection {
+    color: white;
+    background: #343a40;
+  }
 `;
 const Greed = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
 `;
 const Button = styled.button`
-  margin: 0px 10px 0px 0px;  
   padding: 10px;
   font-size: 24px;
   margin-bottom: 10px;
@@ -59,48 +62,48 @@ const P = styled.p`
 `;
 
 const Register = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [name, setName] = useState("");
-    const [user, loading, error] = useAuthState(auth);
-    const navigate = useNavigate();
-    const register = () => {
-        if (!name) alert("Пожалуйста, введите имя");
-        registerWithEmailAndPassword(name, email, password);
-    };
-    useEffect(() => {
-        if (loading) return;
-        if (user) navigate("/dashboard", { replace: true });
-    }, [user, loading]);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
+  const register = () => {
+    if (!name) alert("Пожалуйста, введите имя");
+    registerWithEmailAndPassword(name, email, password);
+  };
+  useEffect(() => {
+    if (loading) return;
+    if (user) navigate("/dashboard", { replace: true });
+  }, [user, loading]);
 
-    return (
-        <>
-                <Text
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Name"
-                    required
-                />
-                <Text
-                    type="text"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="E-mail"
-                    required
-                />
-                <Text
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                    required
-                />
-                <Button  onClick={register}>
-                    Зарегистрировать
-                </Button>
-                <P> Зарегистрируйтесь через <GoogleIconSvg onClick={signInWithGoogle} style={{ cursor: 'pointer', marginLeft: '7px' }}/></P>
-        </>
-    );
+  return (
+    <>
+      <Text
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Name"
+        required
+      />
+      <Text
+        type="text"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="E-mail"
+        required
+      />
+      <Text
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        required
+      />
+      <Button onClick={register}>
+        Зарегистрировать
+      </Button>
+      <P> Зарегистрируйтесь через <GoogleIconSvg onClick={signInWithGoogle} style={{ cursor: 'pointer', marginLeft: '7px' }} /></P>
+    </>
+  );
 }
 export default Register;

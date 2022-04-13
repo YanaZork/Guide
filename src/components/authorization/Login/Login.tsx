@@ -22,6 +22,10 @@ const Text = styled.input`
   &:valid  {
     background: #E8F0FE;
   }
+  &::selection {
+    color: white;
+    background: #343a40;
+  }
 `;
 const Greed = styled.div`
   display: grid;
