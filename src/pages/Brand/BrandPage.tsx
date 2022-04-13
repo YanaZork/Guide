@@ -1,9 +1,11 @@
 import styled from 'styled-components';
+import { ReactComponent as CrossSvg } from '../../svg/cross.svg';
 import { ReactComponent as LikeSvg } from '../.././svg/like.svg';
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { getBrands } from '../.././api/service/brands/brands';
 import { Brand } from '../.././types/Brand';
+import Home from '../Home';
 import '@fontsource/jost';
 import '@fontsource/josefin-slab';
 import '@fontsource/jura';
@@ -18,12 +20,11 @@ const BoxRow = styled.div`
 const BoxColumn = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin: 0px 5%;
 `
 const GridTable = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.5fr;
 `
 const Img = styled.img`
   width:200px;
@@ -39,6 +40,10 @@ font-family: Jost;
 font-size: 21px;
 &.bold{
   font-weight: 700;
+}
+&.table{
+  padding: 5px 10px;
+  border-bottom: 1px solid black;
 }
 `;
 const Title = styled.h2`
@@ -56,32 +61,29 @@ font-family: Jura;
 padding: 10px 10%;
 font-size: 18px;
 text-align: center;
-
 line-height: 30px;
 `
 const Hr = styled.hr`
-margin: 10px 0px;
+margin: 35px 0px 15px 0px;
 `
-const Like = styled.div`
-`;
 
 function BrandPage() {
   function InfoTable() {
     return (
       <>
       <GridTable>
-        {(brand?.info.category) ? <P className='bold'>Категория бренда:</P> : ""}
-        {(brand?.info.category) ? <P>{brand.info.category}</P>: ""}
-        {(brand?.info.yearCreation) ? <P className='bold'>Год основания:</P> : ""}
-        {(brand?.info.yearCreation) ? <P>{brand.info.yearCreation}</P> : ""}
-        {(brand?.info.yearDeath) ? <P className='bold'>Год закрытия:</P> : ""}
-        {(brand?.info.yearDeath) ? <P>{brand.info.yearDeath}</P> : ""}
-        {(brand?.info.founders) ? <P className='bold'>Основатели:</P> : ""}
-        {(brand?.info.founders) ? <P>{brand.info.founders}</P> : ""}
-        {(brand?.models) ? <P className='bold'>Количество моделей:</P> : ""}
-        {(brand?.models) ? <P>{brand.models.length}</P> : ""}
-        {(brand?.info.belong) ? <P className='bold'>Принадлежит:</P> : ""}
-        {(brand?.info.belong) ? <P>{brand.info.belong}</P> : ""}
+        {(brand?.info.category) ? <P className='bold table'>Категория бренда:</P> : ""}
+        {(brand?.info.category) ? <P className='table'>{brand.info.category}</P>: ""}
+        {(brand?.info.yearCreation) ? <P className='bold table'>Год основания:</P> : ""}
+        {(brand?.info.yearCreation) ? <P className='table'>{brand.info.yearCreation}</P> : ""}
+        {(brand?.info.yearDeath) ? <P className='bold table'>Год закрытия:</P> : ""}
+        {(brand?.info.yearDeath) ? <P className='table'>{brand.info.yearDeath}</P> : ""}
+        {(brand?.info.founders) ? <P className='bold table'>Основатели:</P> : ""}
+        {(brand?.info.founders) ? <P className='table'>{brand.info.founders}</P> : ""}
+        {(brand?.models) ? <P className='bold table'>Количество моделей:</P> : ""}
+        {(brand?.models) ? <P className='table'>{brand.models.length}</P> : ""}
+        {(brand?.info.belong) ? <P className='bold table'>Принадлежит:</P> : ""}
+        {(brand?.info.belong) ? <P className='table'>{brand.info.belong}</P> : ""}
       </GridTable>
       </>
     )
@@ -138,26 +140,23 @@ function BrandPage() {
   const brandName = useParams().name;
   const brand = brands.find(b => b.name === brandName);
 
-  if (brand === undefined)
-    return <h2>Такой марки нет</h2>;
-  else
+  if (brand) {
     return (
       <div>
-        <Link to='/'>назад</Link>
+        <Link to='/'><CrossSvg stroke="black"/></Link>
         <BoxRow>
           <BoxColumn>
-            <LikeSvg />
             <Img src={brand.logo} />
-            <NameBrend>{brand.name}</NameBrend>
-            
+            <NameBrend style={{}}><LikeSvg /> {brand.name}</NameBrend>
           </BoxColumn>
             {(brand.info) ? <InfoTable /> : ''}
-          
         </BoxRow>
         {(brand.info.about) ? <AboutBrand /> : ''}
         {(brand.models) ? <AllModelsСards /> : ''}
       </div>
     );
+  } else return <Home />;
+  
 };
 
 export default BrandPage;
