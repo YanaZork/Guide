@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { ReactComponent as LikeSvg } from '../.././svg/like.svg';
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { getBrands } from '../.././api/service/brands/brands';
@@ -6,21 +7,23 @@ import { Brand } from '../.././types/Brand';
 import '@fontsource/jost';
 import '@fontsource/josefin-slab';
 import '@fontsource/jura';
+import { stringify } from 'querystring';
 
 const BoxRow = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 `;
 const BoxColumn = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0px 5%;
 `
 const GridTable = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: 1fr 1fr;
 `
 const Img = styled.img`
   width:200px;
@@ -34,6 +37,9 @@ font-weight: 700;
 const P = styled.p`
 font-family: Jost;
 font-size: 21px;
+&.bold{
+  font-weight: 700;
+}
 `;
 const Title = styled.h2`
 text-align: center;
@@ -47,30 +53,51 @@ span {
 const Text = styled.div`
 text-align: center;
 font-family: Jura;
-padding:0px 10%;
+padding: 10px 10%;
+font-size: 18px;
+text-align: center;
+
+line-height: 30px;
 `
 const Hr = styled.hr`
+margin: 10px 0px;
 `
+const Like = styled.div`
+`;
 
 function BrandPage() {
-
   function InfoTable() {
     return (
       <>
+      <GridTable>
+        {(brand?.info.category) ? <P className='bold'>Категория бренда:</P> : ""}
+        {(brand?.info.category) ? <P>{brand.info.category}</P>: ""}
+        {(brand?.info.yearCreation) ? <P className='bold'>Год основания:</P> : ""}
+        {(brand?.info.yearCreation) ? <P>{brand.info.yearCreation}</P> : ""}
+        {(brand?.info.yearDeath) ? <P className='bold'>Год закрытия:</P> : ""}
+        {(brand?.info.yearDeath) ? <P>{brand.info.yearDeath}</P> : ""}
+        {(brand?.info.founders) ? <P className='bold'>Основатели:</P> : ""}
+        {(brand?.info.founders) ? <P>{brand.info.founders}</P> : ""}
+        {(brand?.models) ? <P className='bold'>Количество моделей:</P> : ""}
+        {(brand?.models) ? <P>{brand.models.length}</P> : ""}
+        {(brand?.info.belong) ? <P className='bold'>Принадлежит:</P> : ""}
+        {(brand?.info.belong) ? <P>{brand.info.belong}</P> : ""}
+      </GridTable>
+      </>
+    )
+  }
+/*
         {(brand?.info.category) ? <P>Категория бренда: {brand.info.category}</P> : ""}
         {(brand?.info.yearCreation) ? <P>Год основания: {brand.info.yearCreation}</P> : ""}
         {(brand?.info.yearDeath) ? <P>Год закрытия: {brand.info.yearDeath}</P> : ""}
         {(brand?.info.founders) ? <P>Основатели: {brand.info.founders}</P> : ""}
         {(brand?.models) ? <P>Количество моделей: {brand.models.length}</P> : ""}
         {(brand?.info.belong) ? <P>Принадлежит: {brand.info.belong}</P> : ""}
-      </>
-    )
-  }
-
+*/
   function AboutBrand() {
     return (
       <>
-        <hr />
+        <Hr />
         <Title>О <span>{brand?.name}</span></Title>
         <Text>{brand?.info.about}</Text>
       </>
@@ -81,7 +108,7 @@ function BrandPage() {
     return (
       <>
         <div>
-          <hr />
+          <Hr />
           <Title>Все модели <span>{brand?.name}</span></Title>
           {brand?.models.map((model) => (
             <div>
@@ -119,12 +146,13 @@ function BrandPage() {
         <Link to='/'>назад</Link>
         <BoxRow>
           <BoxColumn>
+            <LikeSvg />
             <Img src={brand.logo} />
             <NameBrend>{brand.name}</NameBrend>
+            
           </BoxColumn>
-          <GridTable>
             {(brand.info) ? <InfoTable /> : ''}
-          </GridTable>
+          
         </BoxRow>
         {(brand.info.about) ? <AboutBrand /> : ''}
         {(brand.models) ? <AllModelsСards /> : ''}
