@@ -21,19 +21,10 @@ const BoxColumn = styled.div`
   flex-direction: column;
   margin: 0px 5%;
 `;
-const Greed = styled.div`
-  margin: 20px 10%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  grid-auto-rows: minmax(240px, 1fr);;
-`;
+
 const GridTable = styled.div`
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-`;
-const Img = styled.img`
-  width:200px;
-  margin: 5px;
 `;
 const NameBrend = styled.h1`
 font-family: Josefin Slab;
@@ -70,6 +61,27 @@ line-height: 30px;
 `;
 const Hr = styled.hr`
 margin: 35px 0px 15px 0px;
+`;
+
+const Greed = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 285px);
+`;
+
+const Element = styled.div`
+margin: 5px;
+text-align: center;
+color: #fff;
+font-family: Jost;
+font-size: 18px;
+font-weight: 400;
+background: #343a40;
+position: relative;
+cursor: pointer;
+`;
+
+const Img = styled.img`
+  width: 280px;
 `;
 
 function BrandPage() {
@@ -123,16 +135,16 @@ function BrandPage() {
         <Title>Все модели <span>{brand?.name}</span></Title>
         <Greed>
           {brand?.models.map((model) => (
-            <div key={model.title}>
-              <h3>{model.title}</h3>
+            <Element key={model.title}>
+              <P>{model.title}</P>
               {(model.years) ? <P>{model.years}</P> : ''}
-              {(model.photo) ? <Img src={model.photo} /> : ''}
+              {(model.photo) ? <Img src={model.photo}/> : ''}
               <div style={{ display: 'none' }}>
                 {(model.body) ? <P>Кузов: {model.body}</P> : ''}
                 {(model.class) ? <P>Класс: {model.class}</P> : ''}
                 {(model.generations) ? <P>Поколений: {model.generations}</P> : ''}
               </div>
-            </div>
+            </Element>
           ))}
         </Greed>
       </>
