@@ -125,6 +125,7 @@ const P = styled.p`
     display: none;
   }
   &.flagFalse{
+    color:red;
   }
 `;
 
@@ -164,7 +165,7 @@ function Reset() {
 
     let regexp = new RegExp('.+@.+[.].+');
     if (regexp.test(email)) {
-      sendPasswordReset(email);
+      sendPasswordReset(email).then(resp => {setFlag(resp);});
     } else if (email) {
       console.log('не верный формат');
       setFlag(false);
@@ -190,11 +191,11 @@ function Reset() {
             <Window><Link to="/authorization"><CrossSvg style={{ stroke: 'black' }} /></Link></Window>
           </BoxList>
           <Hr />
-          <P>Мы отправим письмо на вашу почту<br /> для сброса пароля</P>
+          <P>Для сброса пароля мы отправим<br />письмо на вашу почту </P>
           <P 
             className={flag ? 'flagTrue' : 'flagFalse'}
           >
-            Не верный формат
+            Неверный формат
           </P>
           <Text
             className={flag ? '' : 'error'}

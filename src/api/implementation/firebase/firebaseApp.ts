@@ -105,8 +105,8 @@ const sendPasswordReset = async (email: string) => {
 };
 
 // выход из системы
-const logout = () => {
-    signOut(auth);
+const logout = async () => {
+    await signOut(auth);
 };
 
 export {

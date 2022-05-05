@@ -108,6 +108,9 @@ const Header = () => {
     fetchUserName();
   }, [user, loading]);
 
+const onLogout = () => {
+  logout().then(() => {setName("")}); 
+}
 
   return (
     <HeaderStyle>
@@ -128,7 +131,7 @@ const Header = () => {
 
         <Box>
           {name ?
-            <Button><LogIn onClick={logout}>{name}</LogIn></Button>
+            <Button><LogIn onClick={onLogout}>{name}</LogIn></Button>
           :
             <Link to="/authorization"><LogIn>Войти</LogIn></Link>
           }
