@@ -95,10 +95,12 @@ const registerWithEmailAndPassword = async (name: string, email: string, passwor
 const sendPasswordReset = async (email: string) => {
     try {
         await sendPasswordResetEmail(auth, email);
-        alert("Вам отправлена ссылка для подтверждения пароля!");
+        console.log('такая почта есть');
+        return true;
     } catch (err) {
-        console.error(err);
-        alert((err as Error).message);
+        console.log('такой почты нет');
+        return false;
+        
     }
 };
 

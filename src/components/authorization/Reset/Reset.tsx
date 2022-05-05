@@ -5,7 +5,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { auth } from "../../../api/implementation/firebase/firebaseApp";
-import { sendPasswordResetEmail } from "firebase/auth";
+import { ProviderId, sendPasswordResetEmail } from "firebase/auth";
+import { sendPasswordReset } from '../../../api/implementation/firebase/firebaseApp'
 
 import '@fontsource/jost';
 import '@fontsource/jura';
@@ -88,6 +89,9 @@ const Text = styled.input`
   &.error {
     color: white;
     background: rgba(255, 0, 0, 0.64);
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.8);
+    }
   }
 `;
 const Button = styled.button`
@@ -115,6 +119,13 @@ const P = styled.p`
   display: flex;
   flex-direction: row;
   justify-content: center;
+
+
+  &.flagTrue {
+    display: none;
+  }
+  &.flagFalse{
+  }
 `;
 
 const Window = styled.p`
@@ -132,27 +143,37 @@ transition: all 0.3s ease;
   color: #38930D;
 }
 `
-function Сheck(email: string){
 
-  let regexp = new RegExp('.+@.+[.].+');
-  if (regexp.test(email)) {
-    //sendPasswordResetEmail(auth, email)
-    console.log(regexp.test(email));
-  } else {
-    
-  }
-}
 
 
 
 function Reset() {
   const [email, setEmail] = useState("");
+
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
   useEffect(() => {
     if (loading) return;
     if (user) navigate("/dashboard");
   }, [user, loading]);
+
+  const [flag, setFlag] = useState(true);
+
+
+  function Сheck(email: string) {
+
+    let regexp = new RegExp('.+@.+[.].+');
+    if (regexp.test(email)) {
+      sendPasswordReset(email);
+    } else if (email) {
+      console.log('не верный формат');
+      setFlag(false);
+      return(
+        <div>не верный формат</div>
+      )
+    } else setFlag(true);
+  }
+
   return (
     <>
       <Box>
@@ -170,24 +191,27 @@ function Reset() {
           </BoxList>
           <Hr />
           <P>Мы отправим письмо на вашу почту<br /> для сброса пароля</P>
+          <P 
+            className={flag ? 'flagTrue' : 'flagFalse'}
+          >
+            Не верный формат
+          </P>
           <Text
-            className="error"
+            className={flag ? '' : 'error'}
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="E-mail"
             required
           />
+          
           <Button onClick={() => Сheck(email)}>
             Отправить
           </Button>
+          <P></P>
         </Container>
       </Box>
     </>
   );
 }
 export default Reset;
-
-// /.+@.+[.].+/gm -почта
-
-// () => sendPasswordResetEmail(auth, email)
