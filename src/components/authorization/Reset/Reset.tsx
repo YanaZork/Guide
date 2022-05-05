@@ -74,6 +74,7 @@ const Text = styled.input`
   font-family: jost;
   font-weight: 500;
   border: 0;
+  outline: none;
   background: #E3E3E3;
   -ms-clear: none;
   -ms-reveal: none;
@@ -83,6 +84,10 @@ const Text = styled.input`
   &::selection {
     color: white;
     background: #343a40;
+  }
+  &.error {
+    color: white;
+    background: rgba(255, 0, 0, 0.64);
   }
 `;
 const Button = styled.button`
@@ -127,6 +132,18 @@ transition: all 0.3s ease;
   color: #38930D;
 }
 `
+function Сheck(email: string){
+
+  let regexp = new RegExp('.+@.+[.].+');
+  if (regexp.test(email)) {
+    //sendPasswordResetEmail(auth, email)
+    console.log(regexp.test(email));
+  } else {
+    
+  }
+}
+
+
 
 function Reset() {
   const [email, setEmail] = useState("");
@@ -154,13 +171,14 @@ function Reset() {
           <Hr />
           <P>Мы отправим письмо на вашу почту<br /> для сброса пароля</P>
           <Text
+            className="error"
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="E-mail"
             required
           />
-          <Button onClick={() => sendPasswordResetEmail(auth, email)}>
+          <Button onClick={() => Сheck(email)}>
             Отправить
           </Button>
         </Container>
@@ -172,3 +190,4 @@ export default Reset;
 
 // /.+@.+[.].+/gm -почта
 
+// () => sendPasswordResetEmail(auth, email)
