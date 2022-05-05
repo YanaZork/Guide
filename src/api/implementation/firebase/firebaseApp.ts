@@ -68,9 +68,9 @@ const signInWithGoogle = async () => {
 const logInWithEmailAndPassword = async (email: string, password: string) => {
     try {
         await signInWithEmailAndPassword(auth, email, password);
+        return true;
     } catch (err) {
-        console.error(err);
-        alert((err as Error).message);
+        return false;
     }
 };
 
@@ -85,9 +85,9 @@ const registerWithEmailAndPassword = async (name: string, email: string, passwor
             authProvider: "local",
             email,
         });
+        return true;
     } catch (err) {
-        console.error(err);
-        alert((err as Error).message);
+        return false;
     }
 };
 
@@ -95,10 +95,8 @@ const registerWithEmailAndPassword = async (name: string, email: string, passwor
 const sendPasswordReset = async (email: string) => {
     try {
         await sendPasswordResetEmail(auth, email);
-        console.log('такая почта есть');
         return true;
     } catch (err) {
-        console.log('такой почты нет');
         return false;
         
     }

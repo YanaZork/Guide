@@ -77,8 +77,6 @@ const Text = styled.input`
   border: 0;
   outline: none;
   background: #E3E3E3;
-  -ms-clear: none;
-  -ms-reveal: none;
   &:valid  {
     background: #E8F0FE;
   }
@@ -135,10 +133,6 @@ color: #38930D;
 padding: 0px 15px;
 font-weight: 500;
 cursor: pointer;
--ms-user-select: none;
--moz-user-select: none;
--khtml-user-select: none;
--webkit-user-select: none;
 transition: all 0.3s ease;
 &:hover {
   color: #38930D;
@@ -159,22 +153,18 @@ function Reset() {
   }, [user, loading]);
 
   const [flag, setFlag] = useState(true);
-
+  const [err, setErr] = useState('');
 
   function Сheck(email: string) {
 
     let regexp = new RegExp('.+@.+[.].+');
     if (regexp.test(email)) {
-      sendPasswordReset(email).then(resp => {setFlag(resp);});
+      sendPasswordReset(email).then(resp => { setFlag(resp); setErr('Такой почты нет') });
     } else if (email) {
-      console.log('не верный формат');
       setFlag(false);
-      return(
-        <div>не верный формат</div>
-      )
+      setErr('Неверный формат');
     } else setFlag(true);
   }
-
   return (
     <>
       <Box>
@@ -192,10 +182,10 @@ function Reset() {
           </BoxList>
           <Hr />
           <P>Для сброса пароля мы отправим<br />письмо на вашу почту </P>
-          <P 
+          <P
             className={flag ? 'flagTrue' : 'flagFalse'}
           >
-            Неверный формат
+            {err}
           </P>
           <Text
             className={flag ? '' : 'error'}
@@ -205,7 +195,6 @@ function Reset() {
             placeholder="E-mail"
             required
           />
-          
           <Button onClick={() => Сheck(email)}>
             Отправить
           </Button>

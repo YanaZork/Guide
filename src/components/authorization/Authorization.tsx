@@ -74,6 +74,10 @@ const P = styled.p`
   &:hover {
     color: #38930D;
   }
+  &.activ {
+    color: #38930D;
+    font-weight: 600;
+  }
 `;
 const Hr = styled.hr`
   margin: 10px 0px 20px 0px;
@@ -96,8 +100,14 @@ function Reset() {
         </BoxLogo>
         <Container>
           <BoxList>
-            <P onClick={() => { setAuthorization(Authorization.byLogin) }}>Вход</P>
-            <P onClick={() => { setAuthorization(Authorization.byRegister) }}>Регистрирация</P>
+            <P 
+              onClick={() => { setAuthorization(Authorization.byLogin) }}
+              className = {authorization === Authorization.byLogin? 'activ':''}
+            >Вход</P>
+            <P 
+              onClick={() => { setAuthorization(Authorization.byRegister) }}
+              className = {authorization === Authorization.byRegister? 'activ':''}
+            >Регистрирация</P>
             <Link to="/" ><CrossSvg style={{ stroke: 'black' }} /></Link>
           </BoxList>
           <Hr />

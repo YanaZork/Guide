@@ -32,7 +32,7 @@ const Box = styled.div`
 
 const Title = styled.h1`
   padding-right: 16px;
-  font-family: Josefin Slab;
+  font-family: 'Josefin Slab';
   font-size: 64px;
   font-weight: 400;
   line-height: 64px;
@@ -40,14 +40,14 @@ const Title = styled.h1`
   text-align: left;
 `;
 const TextLogo = styled.p`
-  font-family: Jura;
+  font-family: "Jura";
   font-size: 14px;
   font-weight: 500;
   line-height: 19px;
 `;
 
 const LogIn = styled.p`
-  font-family: Josefin Slab;
+  font-family: 'Jura';
   font-size: 24px;
   font-weight: 400;
   margin-right: 5px;
