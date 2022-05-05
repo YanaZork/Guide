@@ -14,3 +14,7 @@ export const getBrands = async (): Promise<Brand[]> => {
     });
     return brands;
 }
+
+export const setBrand = async (brand: Brand): Promise<void> => {
+
+}
