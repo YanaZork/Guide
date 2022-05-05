@@ -31,7 +31,6 @@ function App() {
         <Route path='authorization' element={<Authorization />} />
 
         <Route path='reset' element={<Reset />} />
-        <Route path='dashboard' element={<Dashboard />} />
       </Routes>
     </>
   );

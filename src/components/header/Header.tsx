@@ -1,4 +1,11 @@
 import styled from 'styled-components';
+
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
+import { auth, db, logout } from "../../api/implementation/firebase/firebaseApp";
+import { query, collection, getDocs, where } from "firebase/firestore";
+
 import { ReactComponent as LogInSvg } from '../../svg/login.svg';
 import { ReactComponent as MagnifierSvg } from '../../svg/magnifier.svg';
 import '@fontsource/jost';
@@ -74,8 +81,34 @@ const SearchBar = styled.input`
   font-family: Jost;
   font-size: 110%;
 `;
+const Button = styled.button`
+  background: transparent;
+  border: none;
+`;
+
 
 const Header = () => {
+
+  const [user, loading, error] = useAuthState(auth);
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
+  const fetchUserName = async () => {
+    try {
+      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+      const doc = await getDocs(q);
+      const data = doc.docs[0].data();
+      setName(data.name);
+    } catch (err) {
+      alert("Вы не авторизованы");
+    }
+  };
+  useEffect(() => {
+    if (loading) return;
+    if (!user) return navigate("/");
+    fetchUserName();
+  }, [user, loading]);
+
+
   return (
     <HeaderStyle>
       <Box>
@@ -94,7 +127,11 @@ const Header = () => {
         </Form>
 
         <Box>
-          <Link to="/authorization"><LogIn>log in</LogIn></Link>
+          {name ?
+            <Button><LogIn onClick={logout}>{name}</LogIn></Button>
+          :
+            <Link to="/authorization"><LogIn>Войти</LogIn></Link>
+          }
           <LogInSvg />
         </Box>
       </Box>
