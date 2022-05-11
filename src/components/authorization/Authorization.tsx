@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from 'styled-components';
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { auth } from "../../api/implementation/firebase/firebaseApp";
-import { sendPasswordResetEmail } from "firebase/auth";
-import { ReactComponent as CrossSvg } from '../../svg/cross.svg';
 import { Authorization } from '../.././types/Authorization.enum';
+import { ReactComponent as CrossSvg } from '../../svg/cross.svg';
 import Login from "./Login";
 import Register from "./Register";
 
@@ -18,7 +14,6 @@ const Box = styled.div`
   justify-content: center;
   flex-direction: column;
 `;
-
 const BoxLogo = styled.div`
   display: flex;
   flex-direction: row;
@@ -26,10 +21,9 @@ const BoxLogo = styled.div`
   padding: 20px;
   cursor: default;
 `;
-
 const Title = styled.h1`
   padding-right: 16px;
-  font-family: Josefin Slab;
+  font-family: 'Josefin Slab';
   font-size: 64px;
   font-weight: 400;
   line-height: 64px;
@@ -38,13 +32,12 @@ const Title = styled.h1`
   color: #fff;
 `;
 const TextLogo = styled.p`
-  font-family: Jura;
+  font-family: 'Jura';
   font-size: 14px;
   font-weight: 500;
   line-height: 19px;
   color: #fff;
 `;
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -57,19 +50,13 @@ const BoxList = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-family: Jura;
+  font-family: 'Jura';
 `;
-
 const P = styled.p`
   font-size: 24px;
-  
   padding: 0px 15px;
   font-weight: 400;
   cursor: pointer;
-  -ms-user-select: none;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
   transition: all 0.3s ease;
   &:hover {
     color: #38930D;
@@ -118,4 +105,3 @@ function Reset() {
   );
 }
 export default Reset;
-//style={{stroke:'black', ':hover': {stroke:'green'}}}

@@ -2,16 +2,12 @@ import React, { useEffect, useState } from "react";
 import styled from 'styled-components';
 import { ReactComponent as GoogleIconSvg } from '../../../svg/google-icon.svg';
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   auth,
   registerWithEmailAndPassword,
-  signInWithGoogle,
-  logInWithEmailAndPassword
+  signInWithGoogle
 } from "../../../api/implementation/firebase/firebaseApp";
-
-import '@fontsource/jost';
-import '@fontsource/jura';
 
 const Text = styled.input`
   margin-bottom: 15px;
@@ -19,7 +15,7 @@ const Text = styled.input`
   border-radius: 50px;
   text-align: center;
   font-size: 18px;
-  font-family: jost;
+  font-family: 'Jost';
   font-weight: 500;
   border: 0;
   outline: none;
@@ -40,10 +36,6 @@ const Text = styled.input`
     }
   }
 `;
-const Greed = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-`;
 const Button = styled.button`
   padding: 10px;
   font-size: 24px;
@@ -52,7 +44,7 @@ const Button = styled.button`
   color: white;
   background-color: #38930D;
   border-radius: 5px;
-  font-family: Jura;
+  font-family: 'Jura';
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -61,15 +53,13 @@ const Button = styled.button`
   }
 `;
 const P = styled.p`
-  font-family: Jura;
+  font-family: 'Jura';
   font-size: 18px;
   font-weight: 400;
   cursor: default;
-
   display: flex;
   flex-direction: row;
   justify-content: center;
-
   &.flagTrue {
     display: none;
   }
@@ -81,17 +71,16 @@ const P = styled.p`
 const Register = () => {
   const [flag, setFlag] = useState(true);
   const [err, setErr] = useState('');
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
+  if (user) navigate("/");
   useEffect(() => {
     if (loading) return;
-    if (user) navigate("/", { replace: true });
-  }, [user, loading]);
+  }, [loading]);
 
   function Сheck(name: string, email: string, password: string) {
 
@@ -111,11 +100,7 @@ const Register = () => {
 
   return (
     <>
-      <P
-        className={flag ? 'flagTrue' : 'flagFalse'}
-      >
-        {err}
-      </P>
+      <P className={flag ? 'flagTrue' : 'flagFalse'}> {err} </P>
       <Text
         className={flag ? '' : 'error'}
         type="text"

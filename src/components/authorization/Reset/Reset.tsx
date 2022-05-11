@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from 'styled-components';
-import { ReactComponent as CrossSvg } from '../../../svg/cross.svg';
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { auth } from "../../../api/implementation/firebase/firebaseApp";
-import { ProviderId, sendPasswordResetEmail } from "firebase/auth";
-import { sendPasswordReset } from '../../../api/implementation/firebase/firebaseApp'
-
-import '@fontsource/jost';
-import '@fontsource/jura';
-
+import { useNavigate, Link } from "react-router-dom";
+import { sendPasswordReset, auth } from "../../../api/implementation/firebase/firebaseApp";
+import { ReactComponent as CrossSvg } from '../../../svg/cross.svg';
 
 const Box = styled.div`
   height: 100vh;
@@ -20,7 +13,6 @@ const Box = styled.div`
   justify-content: center;
   flex-direction: column;
 `;
-
 const BoxLogo = styled.div`
   display: flex;
   flex-direction: row;
@@ -28,10 +20,9 @@ const BoxLogo = styled.div`
   padding: 20px;
   cursor: default;
 `;
-
 const Title = styled.h1`
   padding-right: 16px;
-  font-family: Josefin Slab;
+  font-family: 'Josefin Slab';
   font-size: 64px;
   font-weight: 400;
   line-height: 64px;
@@ -40,13 +31,12 @@ const Title = styled.h1`
   color: #fff;
 `;
 const TextLogo = styled.p`
-  font-family: Jura;
+  font-family: 'Jura';
   font-size: 14px;
   font-weight: 500;
   line-height: 19px;
   color: #fff;
 `;
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -59,7 +49,7 @@ const BoxList = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-family: Jura;
+  font-family: 'Jura';
 `;
 const Hr = styled.hr`
   margin: 10px 0px 20px 0px;
@@ -100,12 +90,19 @@ const Button = styled.button`
   color: white;
   background-color: #38930D;
   border-radius: 5px;
-  font-family: Jura;
+  font-family: 'Jura';
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   &:hover {
     background-color: #007934;
+  }
+  &.disabled {
+    background-color: #37975f;
+    &:hover {
+      background-color: #37975f;
+      cursor: default;
+    }
   }
 `;
 const P = styled.p`
@@ -113,12 +110,10 @@ const P = styled.p`
   font-size: 18px;
   font-weight: 400;
   cursor: default;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;
-
-
   &.flagTrue {
     display: none;
   }
@@ -126,7 +121,6 @@ const P = styled.p`
     color:red;
   }
 `;
-
 const Window = styled.p`
 font-size: 24px;
 color: #38930D; 
@@ -139,31 +133,47 @@ transition: all 0.3s ease;
 }
 `
 
-
-
-
 function Reset() {
+  const [counter, setCounter] = useState(20);
+  const [isCounting, setIsCounting] = useState(false);
   const [email, setEmail] = useState("");
-
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
-  useEffect(() => {
-    if (loading) return;
-    if (user) navigate("/");
-  }, [user, loading]);
-
   const [flag, setFlag] = useState(true);
   const [err, setErr] = useState('');
+  const handleStart = () => {
+    if (counter === 0) setCounter(20);
+    setIsCounting(true);
+  }
+
+  if (user) navigate("/");
+  useEffect(() => {
+    if (loading) return;
+
+    const interval = setInterval(() => {
+      isCounting &&
+        setCounter((counter) => counter >= 1 ? counter - 1 : 0)
+    }, 1000);
+    if (counter === 0) setIsCounting(false);
+    return () => {
+      clearInterval(interval);
+    }
+  }, [loading, isCounting, counter]);
 
   function Сheck(email: string) {
-
     let regexp = new RegExp('.+@.+[.].+');
     if (regexp.test(email)) {
-      sendPasswordReset(email).then(resp => { setFlag(resp); setErr('Такой почты нет') });
+      sendPasswordReset(email).then(resp => {
+        setFlag(resp);
+        resp ? setErr('') : setErr('Такой почты нет');
+        if (resp) {
+          handleStart();
+        }
+      });
     } else if (email) {
       setFlag(false);
       setErr('Неверный формат');
-    } else setFlag(true);
+    } else { setFlag(false); setErr('Обязательно к заполнению'); }
   }
   return (
     <>
@@ -182,11 +192,7 @@ function Reset() {
           </BoxList>
           <Hr />
           <P>Для сброса пароля мы отправим<br />письмо на вашу почту </P>
-          <P
-            className={flag ? 'flagTrue' : 'flagFalse'}
-          >
-            {err}
-          </P>
+          <P className={flag ? 'flagTrue' : 'flagFalse'}> {err} </P>
           <Text
             className={flag ? '' : 'error'}
             type="text"
@@ -195,10 +201,14 @@ function Reset() {
             placeholder="E-mail"
             required
           />
-          <Button onClick={() => Сheck(email)}>
+          <Button
+            className={isCounting ? 'disabled' : ''}
+            disabled={isCounting}
+            onClick={() => Сheck(email)}
+          >
             Отправить
           </Button>
-          <P></P>
+          {isCounting ? <P>Отправить повторно через: {counter}</P> : ''}
         </Container>
       </Box>
     </>

@@ -5,9 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, signInWithGoogle, logInWithEmailAndPassword } from "../../../api/implementation/firebase/firebaseApp";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-import '@fontsource/jost';
-import '@fontsource/jura';
-
 const Text = styled.input`
   margin-bottom: 15px;
   padding: 15px;
@@ -47,7 +44,7 @@ const Button = styled.button`
   color: white;
   background-color: #38930D;
   border-radius: 5px;
-  font-family: Jura;
+  font-family: 'Jura';
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -56,7 +53,7 @@ const Button = styled.button`
   }
 `;
 const P = styled.p`
-  font-family: Jura;
+  font-family: 'Jura';
   font-size: 18px;
   font-weight: 400;
   cursor: default;
@@ -72,21 +69,20 @@ const P = styled.p`
 function Login() {
   const [flag, setFlag] = useState(true);
   const [err, setErr] = useState('');
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const navigate = useNavigate();
 
+  if (user) navigate("/");
   useEffect(() => {
     if (loading) return;
-    if (user) navigate("/");
-  }, [user, loading]);
+  }, [loading]);
 
   function Сheck(email: string, password: string) {
-
     let regexpEmail = new RegExp('.+@.+[.].+');
     let regexpPassword = new RegExp('.{5}.+');
+    
     if (regexpEmail.test(email) && regexpPassword.test(password)) {
       logInWithEmailAndPassword(email, password).then(resp => { setFlag(resp); setErr('Попробуйте другую почту') });
     } else if (!regexpEmail.test(email) || !regexpPassword.test(password)) {
@@ -97,11 +93,7 @@ function Login() {
 
   return (
     <>
-      <P
-        className={flag ? 'flagTrue' : 'flagFalse'}
-      >
-        {err}
-      </P>
+      <P className={flag ? 'flagTrue' : 'flagFalse'}> {err} </P>
       <Text
         className={flag ? '' : 'error'}
         type="text"
