@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import { auth, db, logout } from "../../api/implementation/firebase/firebaseApp";
@@ -89,10 +89,10 @@ const Button = styled.button`
 
 const Header = () => {
 
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
   const navigate = useNavigate();
-  const fetchUserName = async () => {
+  const fetchUserName = useCallback(async () => {
     try {
       const q = query(collection(db, "users"), where("uid", "==", user?.uid));
       const doc = await getDocs(q);
@@ -101,12 +101,13 @@ const Header = () => {
     } catch (err) {
       alert("Вы не авторизованы");
     }
-  };
+  }, [user?.uid]);
+  
   useEffect(() => {
     if (loading) return;
     if (!user) return navigate("/");
     fetchUserName();
-  }, [user, loading]);
+  }, [user, loading, navigate, fetchUserName]);
 
 const onLogout = () => {
   logout().then(() => {setName("")}); 
