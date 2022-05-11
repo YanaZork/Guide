@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Alphabetically from '../../components/sorting/alphabetically';
 import ByCountry from '../../components/sorting/by_country';
 import { Filter } from '../../types/Filter.enum';
-
+import Header from '../../components/header';
 import '@fontsource/jost';
 import '@fontsource/josefin-slab';
 import '@fontsource/jura';
@@ -27,8 +27,9 @@ const P = styled.p`
   -moz-user-select: none;
   -khtml-user-select: none;
   -webkit-user-select: none;
+  transition: all 0.3s ease;
   &:hover {
-    transition: all 0.3s ease;
+    
     color: #38930D;
   }
 `
@@ -45,6 +46,8 @@ function Home() {
 
   return (
     <>
+    
+      <Header />
       <Box>
         <P onClick={() => { setFilter(Filter.byAlphabetically) }}>по алфавиту</P>
         <P onClick={() => { setFilter(Filter.byCountry) }}>по странам</P>

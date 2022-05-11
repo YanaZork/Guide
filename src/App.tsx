@@ -2,9 +2,10 @@ import React, { useEffect, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Brand from './pages/Brand';
 import Home from './pages/Home';
-import Header from './components/header';
-import Footer from './components/footer';
 import FirebaseApp from './api/implementation/firebase/firebaseApp';
+import Reset from './components/authorization/Reset';
+import Authorization from './components/authorization';
+
 
 function App() {
   const firebaseApp = useMemo(() => {
@@ -19,12 +20,13 @@ function App() {
 
   return (
     <>
-      <Header />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='brand' element={<Brand />} />
+        <Route path='authorization' element={<Authorization />} />
+
+        <Route path='reset' element={<Reset />} />
       </Routes>
-      <Footer />
     </>
   );
 }
