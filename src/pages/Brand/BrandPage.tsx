@@ -27,12 +27,13 @@ const GridTable = styled.div`
   grid-template-columns: 1fr 1.5fr;
 `;
 const NameBrend = styled.h1`
-font-family: Josefin Slab;
-font-size: 40px;
-font-weight: 700;
+  text-align: center;
+  font-family: 'Josefin Slab';
+  font-size: 40px;
+  font-weight: 700;
 `;
 const P = styled.p`
-font-family: Jost;
+font-family: 'Jost';
 font-size: 21px;
 &.bold{
   font-weight: 700;
@@ -44,45 +45,93 @@ font-size: 21px;
 `;
 const Title = styled.h2`
 text-align: center;
-font-family: Jura;
+font-family: 'Jura';
 font-weight: 400;
+font-size: 30px;
+margin-bottom: 15px;
 span {
-  font-family: Josefin Slab;
+  font-family: 'Josefin Slab';
   font-weight: 600;
 }
 `;
 const Text = styled.div`
-text-align: center;
-font-family: Jura;
-padding: 10px 10%;
-font-size: 18px;
-text-align: center;
+text-align: justify;
+font-family: 'Jura';
+padding: 10px 6.75%;
+font-size: 20px;
 line-height: 30px;
 `;
 const Hr = styled.hr`
 margin: 35px 0px 15px 0px;
 `;
 
+
+
+
 const Greed = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, 285px);
+  margin: 40px 6.75%;
+  grid-template-columns: repeat(auto-fill, 350px);
+  row-gap: 15px;
+  column-gap: 2%;
 `;
 
 const Element = styled.div`
-margin: 5px;
-text-align: center;
-color: #fff;
-font-family: Jost;
-font-size: 18px;
-font-weight: 400;
-background: #343a40;
-position: relative;
-cursor: pointer;
+  position: relative;
+  width: 350px;
+  background: #343A40;
 `;
 
+const Name = styled.div`
+  margin: 15px auto;
+  text-align: center;
+  font-family: 'Jura';
+  font-size: 18px;
+  color: #FFFFFF;
+`
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: #000;
+`
+
+const Container = styled.div`
+  position: relative;
+  width: 350px;
+  ${Overlay}:hover{
+      opacity: 0.75;
+    }
+`
+
 const Img = styled.img`
-  width: 280px;
+  display: block;
+  width: 100%;
+  height: auto;
 `;
+
+const TextUl = styled.ul`
+  color: white;
+  text-align:center;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  & li {
+    list-style-type: none;
+    font-family: 'Jura';
+    font-size: 20px;
+
+  }
+`
+
+
 
 function BrandPage() {
 
@@ -133,17 +182,21 @@ function BrandPage() {
       <>
         <Hr />
         <Title>Все модели <span>{brand?.name}</span></Title>
+
         <Greed>
           {brand?.models.map((model) => (
             <Element key={model.title}>
-              <P>{model.title}</P>
-              {(model.years) ? <P>{model.years}</P> : ''}
-              {(model.photo) ? <Img src={model.photo}/> : ''}
-              <div style={{ display: 'none' }}>
-                {(model.body) ? <P>Кузов: {model.body}</P> : ''}
-                {(model.class) ? <P>Класс: {model.class}</P> : ''}
-                {(model.generations) ? <P>Поколений: {model.generations}</P> : ''}
-              </div>
+              <Name>{model.title}<br />{model.years}</Name>
+              <Container>
+                <Img src={model.photo} />
+                <Overlay>
+                  <TextUl>
+                    {(model.body) ? <li>Кузов: {model.body}</li> : ''}
+                    {(model.class) ? <li>Класс: {model.class}</li> : ''}
+                    {(model.generations) ? <li>Поколений: {model.generations}</li> : ''}
+                  </TextUl>
+                </Overlay>
+              </Container>
             </Element>
           ))}
         </Greed>
