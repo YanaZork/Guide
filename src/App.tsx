@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import FirebaseApp from './api/implementation/firebase/firebaseApp';
 import Reset from './components/authorization/Reset';
 import Authorization from './components/authorization';
+import Import from './pages/Import';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='brand' element={<Brand />} />
         <Route path='authorization' element={<Authorization />} />
+        {/* <Route path='import' element={<Import />} /> */}
 
         <Route path='reset' element={<Reset />} />
       </Routes>
