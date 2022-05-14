@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import FirebaseApp from './api/implementation/firebase/firebaseApp';
 import Reset from './components/authorization/Reset';
 import Authorization from './components/authorization';
-import Import from './pages/Import';
+// import Import from './pages/Import';
 
 
 function App() {

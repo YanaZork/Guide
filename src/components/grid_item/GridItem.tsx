@@ -1,17 +1,18 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { ReactComponent as LikeSvg } from '../.././svg/like.svg';
 import { useEffect, useState } from 'react';
-import { getBrands } from '../.././api/service/brands/brands';
+import { getBrands, updateBrandLogo } from '../.././api/service/brands/brands';
 import { Brand } from '../.././types/Brand';
-import "@fontsource/jost"
+import '@fontsource/jost';
+import { uploadLogo } from '../../api/service/images/images';
 
 const Grid = styled.div`
   margin: 20px 10%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  grid-auto-rows: minmax(240px, 1fr);;
+  grid-auto-rows: minmax(240px, 1fr); ;
 `;
 
 const Element = styled.div`
@@ -34,7 +35,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 const Img = styled.img`
-  width:200px;
+  width: 200px;
   margin: 5px;
 `;
 const Like = styled.div`
@@ -44,13 +45,41 @@ const Like = styled.div`
 `;
 
 const GridItem = () => {
-
   const [brands, setBrands] = useState<Brand[]>([]);
+
+  const getBase64Image = (url: string): Promise<string> => {
+    return new Promise((resolve) => {
+      var request = new XMLHttpRequest();
+      request.open('GET', url, true);
+      request.responseType = 'blob';
+      request.onload = function () {
+        var reader = new FileReader();
+        reader.readAsDataURL(request.response);
+        reader.onload = function (e) {
+          resolve(e.target?.result as string);
+        };
+      };
+      request.send();
+    });
+  };
+
+  const updateLogo = async (name: string, url: string) => {
+    const base64 = await getBase64Image(url);
+    const link = await uploadLogo(name, base64);
+    await updateBrandLogo(name, link);
+  };
 
   useEffect(() => {
     getBrands().then((resp) => {
       setBrands(resp);
+      // updateLogo(resp[0].name, resp[0].logo);
+      resp.forEach((brand) => {
+        if (brand.logo.indexOf('cdn.motorpage.ru')) {
+          // updateLogo(brand.name, brand.logo);
+        }
+      });
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -58,12 +87,14 @@ const GridItem = () => {
       <Grid>
         {brands.map((brand) => (
           <Element key={brand.name}>
-            <Link to={'/brand/'+ brand.name}>
+            <Link to={'/brand/' + brand.name}>
               <Text>{brand.name}</Text>
               <Wrapper>
-                <Img src={brand.logo} />
+                <Img src={brand.logo}/>
               </Wrapper>
-              <Like><LikeSvg /></Like>
+              <Like>
+                <LikeSvg />
+              </Like>
             </Link>
           </Element>
         ))}

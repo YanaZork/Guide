@@ -1,4 +1,4 @@
-import { collection, getDocs, setDoc, doc } from "firebase/firestore";
+import { collection, getDocs, setDoc, doc, updateDoc } from "firebase/firestore";
 import { Brand } from "../../../types/Brand";
 import database from '../../implementation/firestore/firestoreDatabase';
 
@@ -31,4 +31,11 @@ export const getBrands = async (): Promise<Brand[]> => {
 
 export const setBrand = async (brand: Brand): Promise<void> => {
     await setDoc(doc(database(), "brand", brand.name), brand);
+}
+
+export const updateBrandLogo = async (brandName: string, logo: string): Promise<void> => {
+    const brandRef = doc(database(), "brand", brandName);
+    await updateDoc(brandRef, {
+        logo
+    })
 }
