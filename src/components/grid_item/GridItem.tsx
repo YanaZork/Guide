@@ -12,21 +12,43 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   grid-auto-rows: minmax(240px, 1fr);;
-`;
 
+`;
 const Element = styled.div`
   margin: -1px;
-  background: wight;
+  background: #fff;
   border: 2px solid #aaa;
   position: relative;
   cursor: pointer;
-`;
 
+  &.separator {
+    background-color: #F2F5F7;
+    grid-column: 1;
+    
+    & p {
+      position: relative;
+      text-align: center;
+      top: 45%;
+      transform: translateY(-50%);
+      font-family: 'Jura';
+      color: #D9E2E7;
+      font-size: 120px;
+    }
+  }
+  &.hr {
+    border-left: none;
+    border-right: none;
+    grid-column: 1;
+    &.A {
+      border-top: none;
+    }
+  }
+`;
 const Text = styled.p`
   font-size: 21px;
   color: #007934;
   text-align: center;
-  font-family: Jost;
+  font-family: 'Jost';
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -43,6 +65,7 @@ const Like = styled.div`
   left: 80%;
 `;
 
+
 const GridItem = () => {
 
   const [brands, setBrands] = useState<Brand[]>([]);
@@ -53,22 +76,47 @@ const GridItem = () => {
     });
   }, []);
 
-  return (
-    <>
-      <Grid>
-        {brands.map((brand) => (
+
+
+  let letter = '';
+  const SortAlph = brands.map((brand) => {
+    if (letter !== brand.name.charAt(0)) {
+      letter = brand.name.charAt(0);
+      return (
+        <>
+          {letter === 'A'? '':<Element className='hr'></Element>}
+          <Element className='separator'>
+            <p>{letter}</p>
+          </Element>
           <Element key={brand.name}>
             <Link to={brand.name}>
               <Text>{brand.name}</Text>
               <Wrapper>
                 <Img src={brand.logo} />
               </Wrapper>
-              <Like><LikeSvg /></Like>
+              <Like><LikeSvg fill={"#C4C4C4"} /></Like>
             </Link>
           </Element>
-        ))}
-      </Grid>
-    </>
+        </>
+      );
+    }
+    return (
+      <Element key={brand.name}>
+        <Link to={brand.name}>
+          <Text>{brand.name}</Text>
+          <Wrapper>
+            <Img src={brand.logo} />
+          </Wrapper>
+          <Like><LikeSvg fill={"#C4C4C4"} /></Like>
+        </Link>
+      </Element>
+    );
+  })
+
+  return (
+    <Grid>
+      {SortAlph}
+    </Grid>
   );
 };
 
