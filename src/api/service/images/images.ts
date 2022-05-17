@@ -1,14 +1,21 @@
-import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import storage from '../../implementation/storage/storage';
 
-export const updateImage = (name: string, path: string, image: string) => {
+export const updateImage = (path: string, file: any, name: string) => {
     const storageRef = ref(storage(), `${path}/${name}`);
 
-    return uploadString(storageRef, image, 'base64');
+    return uploadBytes(storageRef, file);
 }
 
-export const uploadLogo = async (name: string, image: string) => {
-    const uploadTask = await updateImage(name, 'logos', image);
+export const uploadLogo = async (file: any, name: string) => {
+    const uploadTask = await updateImage('logos', file, name);
     const downloadLink = await getDownloadURL(uploadTask.ref)
     return downloadLink;
 }
+
+export const updateModelPhoto = async (file: any, name: string) => {
+    const uploadTask = await updateImage('models', file, name);
+    const downloadLink = await getDownloadURL(uploadTask.ref)
+    return downloadLink;
+}
+

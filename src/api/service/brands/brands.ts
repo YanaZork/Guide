@@ -1,5 +1,6 @@
 import { collection, getDocs, setDoc, doc, updateDoc } from "firebase/firestore";
 import { Brand } from "../../../types/Brand";
+import { Model } from "../../../types/Model";
 import database from '../../implementation/firestore/firestoreDatabase';
 
 export const getBrands = async (): Promise<Brand[]> => {
@@ -37,5 +38,18 @@ export const updateBrandLogo = async (brandName: string, logo: string): Promise<
     const brandRef = doc(database(), "brand", brandName);
     await updateDoc(brandRef, {
         logo
+    })
+}
+
+/**
+ * Осторожно! Меняет всю пачку моделей
+ * @param brandName 
+ * @param logo 
+ * @param model 
+ */
+export const updateModelImage = async (brandName: string, models: Model[]): Promise<void> => {
+    const brandRef = doc(database(), "brand", brandName);
+    await updateDoc(brandRef, {
+        models
     })
 }

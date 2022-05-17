@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ReactComponent as LikeSvg } from '../.././svg/like.svg';
 import { useEffect, useState } from 'react';
-import { getBrands, updateBrandLogo } from '../.././api/service/brands/brands';
+import { getBrands, updateBrandLogo, updateModelImage } from '../.././api/service/brands/brands';
 import { Brand } from '../.././types/Brand';
 import '@fontsource/jost';
-import { uploadLogo } from '../../api/service/images/images';
+import { updateModelPhoto, uploadLogo } from '../../api/service/images/images';
 
 const Grid = styled.div`
   margin: 20px 10%;
@@ -47,39 +47,55 @@ const Like = styled.div`
 const GridItem = () => {
   const [brands, setBrands] = useState<Brand[]>([]);
 
-  const getBase64Image = (url: string): Promise<string> => {
+  const getBlob = (url: string): Promise<string> => {
     return new Promise((resolve) => {
       var request = new XMLHttpRequest();
       request.open('GET', url, true);
       request.responseType = 'blob';
       request.onload = function () {
-        var reader = new FileReader();
-        reader.readAsDataURL(request.response);
-        reader.onload = function (e) {
-          resolve(e.target?.result as string);
-        };
+        resolve(request.response);
+        // var reader = new FileReader();
+        // reader.readAsDataURL(request.response);
+        // reader.onload = function (e) {
+        //   resolve((e.target?.result as string).split(',')[1] as string);
+        // };
       };
       request.send();
     });
   };
 
-  const updateLogo = async (name: string, url: string) => {
-    const base64 = await getBase64Image(url);
-    const link = await uploadLogo(name, base64);
-    await updateBrandLogo(name, link);
+  const updateImage = async (brand: string, url: string) => {
+    const blob = await getBlob(url);
+    const link = await updateModelPhoto(
+      blob,
+      url.split('/')[url.split('/').length - 1]
+    );
+    return link
+  };
+
+  const doSomeWorkWithPictures = async (resp: Brand[]) => {
+    for (const brand of resp) {
+      for (const model of brand.models) {
+        if (
+          model.photo.indexOf('cdn.motorpage.ru') !== -1
+        ) {
+          let newLink = await updateImage(
+            brand.name,
+            model.photo.replace('cdn.motorpage.ru', 'localhost:3001')
+          );
+          model.photo = newLink;
+        }
+      }
+      await updateModelImage(brand.name, brand.models);
+    }
   };
 
   useEffect(() => {
-    getBrands().then((resp) => {
+    getBrands().then(async (resp) => {
       setBrands(resp);
-      // updateLogo(resp[0].name, resp[0].logo);
-      resp.forEach((brand) => {
-        if (brand.logo.indexOf('cdn.motorpage.ru')) {
-          // updateLogo(brand.name, brand.logo);
-        }
-      });
+      // doSomeWorkWithPictures(resp);
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -90,7 +106,7 @@ const GridItem = () => {
             <Link to={'/brand/' + brand.name}>
               <Text>{brand.name}</Text>
               <Wrapper>
-                <Img src={brand.logo}/>
+                <Img src={brand.logo} />
               </Wrapper>
               <Like>
                 <LikeSvg />
