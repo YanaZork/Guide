@@ -20,7 +20,6 @@ const Element = styled.div`
   border: 2px solid #aaa;
   position: relative;
   cursor: pointer;
-
   &.separator {
     background-color: #F2F5F7;
     grid-column: 1;
@@ -33,14 +32,6 @@ const Element = styled.div`
       font-family: 'Jura';
       color: #D9E2E7;
       font-size: 120px;
-    }
-  }
-  &.hr {
-    border-left: none;
-    border-right: none;
-    grid-column: 1;
-    &.A {
-      border-top: none;
     }
   }
 `;
@@ -76,15 +67,12 @@ const GridItem = () => {
     });
   }, []);
 
-
-
   let letter = '';
   const SortAlph = brands.map((brand) => {
     if (letter !== brand.name.charAt(0)) {
       letter = brand.name.charAt(0);
       return (
         <>
-          {letter === 'A'? '':<Element className='hr'></Element>}
           <Element className='separator'>
             <p>{letter}</p>
           </Element>
