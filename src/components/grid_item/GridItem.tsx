@@ -1,19 +1,20 @@
-import styled from 'styled-components'
 import React from 'react';
 import { Link } from "react-router-dom";
+import styled from 'styled-components';
+
 import { ReactComponent as LikeSvg } from '../.././svg/like.svg';
 import { useEffect, useState } from 'react';
 import { getBrands } from '../.././api/service/brands/brands';
 import { Brand } from '../.././types/Brand';
-import "@fontsource/jost"
+import '@fontsource/jost';
 
 const Grid = styled.div`
   margin: 20px 10%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  grid-auto-rows: minmax(240px, 1fr);;
-
+  grid-auto-rows: minmax(240px, 1fr);
 `;
+
 const Element = styled.div`
   margin: -1px;
   background: #fff;
@@ -47,7 +48,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 const Img = styled.img`
-  width:200px;
+  width: 200px;
   margin: 5px;
 `;
 const Like = styled.div`
@@ -58,7 +59,6 @@ const Like = styled.div`
 
 
 const GridItem = () => {
-
   const [brands, setBrands] = useState<Brand[]>([]);
 
   useEffect(() => {

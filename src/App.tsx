@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import FirebaseApp from './api/implementation/firebase/firebaseApp';
 import Reset from './components/authorization/Reset';
 import Authorization from './components/authorization';
-import Header from './components/header';
+
 
 function App() {
   const firebaseApp = useMemo(() => {
