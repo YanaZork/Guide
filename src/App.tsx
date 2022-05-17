@@ -1,11 +1,10 @@
 import React, { useEffect, useMemo } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Brand from './pages/Brand';
+import BrandPage from './pages/Brand';
 import Home from './pages/Home';
 import FirebaseApp from './api/implementation/firebase/firebaseApp';
 import Reset from './components/authorization/Reset';
 import Authorization from './components/authorization';
-// import Import from './pages/Import';
 
 
 function App() {
@@ -23,11 +22,10 @@ function App() {
     <>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='brand' element={<Brand />} />
+        <Route path='/:name' element={<BrandPage />} />
         <Route path='authorization' element={<Authorization />} />
-        {/* <Route path='import' element={<Import />} /> */}
-
         <Route path='reset' element={<Reset />} />
+        <Route path="*" element={<Home />} />
       </Routes>
     </>
   );
