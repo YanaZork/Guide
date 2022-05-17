@@ -14,7 +14,7 @@ const Box = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-family: Jura;
+  font-family: 'Jura';
 `;
 
 const P = styled.p`
@@ -45,7 +45,6 @@ function Home() {
 
   return (
     <>
-    
       <Header />
       <Box>
         <P 

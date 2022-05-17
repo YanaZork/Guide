@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-
+import React from 'react';
 import { Link } from "react-router-dom";
 import { ReactComponent as LikeSvg } from '../.././svg/like.svg';
 import { useEffect, useState } from 'react';
@@ -67,16 +67,18 @@ const GridItem = () => {
     });
   }, []);
 
+
+
   let letter = '';
   const SortAlph = brands.map((brand) => {
     if (letter !== brand.name.charAt(0)) {
       letter = brand.name.charAt(0);
       return (
-        <>
+        <React.Fragment key={brand.name}>
           <Element className='separator'>
             <p>{letter}</p>
           </Element>
-          <Element key={brand.name}>
+          <Element>
             <Link to={brand.name}>
               <Text>{brand.name}</Text>
               <Wrapper>
@@ -85,7 +87,7 @@ const GridItem = () => {
               <Like><LikeSvg fill={"#C4C4C4"} /></Like>
             </Link>
           </Element>
-        </>
+        </React.Fragment>
       );
     }
     return (

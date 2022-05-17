@@ -5,8 +5,7 @@ import Home from './pages/Home';
 import FirebaseApp from './api/implementation/firebase/firebaseApp';
 import Reset from './components/authorization/Reset';
 import Authorization from './components/authorization';
-import Import from './pages/Import';
-
+import Header from './components/header';
 
 function App() {
   const firebaseApp = useMemo(() => {
@@ -33,13 +32,3 @@ function App() {
 }
 
 export default App;
-/*
-      <Routes>
-        
-        <Route path='/' element={<Home />} />
-        <Route path='/:name' element={<BrandPage />} />
-        <Route path='authorization' element={<Authorization />} />
-        <Route path='reset' element={<Reset />} />
-        <Route path="*" element={<Home />} />
-      </Routes>
-*/
