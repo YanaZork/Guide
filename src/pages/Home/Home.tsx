@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Alphabetically from '../../components/sorting/alphabetically';
 import ByCountry from '../../components/sorting/by_country';
 import { Filter } from '../../types/Filter.enum';
-
+import Header from '../../components/header';
 import '@fontsource/jost';
 import '@fontsource/josefin-slab';
 import '@fontsource/jura';
@@ -23,7 +23,7 @@ const P = styled.p`
   padding: 10px 10%;
   cursor: pointer;
   &:hover {
-    transition: all 0.3s ease;
+    
     color: #38930D;
   }
   &.active {
@@ -45,6 +45,8 @@ function Home() {
 
   return (
     <>
+    
+      <Header />
       <Box>
         <P 
           onClick={() => { setFilter(Filter.byAlphabetically) }}

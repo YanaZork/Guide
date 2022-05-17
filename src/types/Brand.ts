@@ -1,3 +1,5 @@
+import { Model } from "./Model";
+
 export interface Brand {
     name: string;
     logo: string;
@@ -7,16 +9,6 @@ export interface Brand {
         category: string;
         founders: string;
         yearCreation: string;
-        yearDeath: string;
-    }
-    models: [
-        {
-            title: string;
-            body: string;
-            class: string;
-            generations: string;
-            photo: string;
-            years: string;
-        }
-    ]
+    };
+    models: Model[]
 }

@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { getBrands } from '../.././api/service/brands/brands';
 import { Brand } from '../.././types/Brand';
-import Home from '../Home';
+import Header from '../../components/header';
 import '@fontsource/jost';
 import '@fontsource/josefin-slab';
 import '@fontsource/jura';
@@ -21,7 +21,6 @@ const BoxColumn = styled.div`
   flex-direction: column;
   margin: 0px 5%;
 `;
-
 const GridTable = styled.div`
   display: grid;
   grid-template-columns: 1fr 1.5fr;
@@ -64,10 +63,6 @@ line-height: 30px;
 const Hr = styled.hr`
 margin: 35px 0px 15px 0px;
 `;
-
-
-
-
 const Greed = styled.div`
   display: grid;
   margin: 40px 6.75%;
@@ -75,13 +70,11 @@ const Greed = styled.div`
   row-gap: 15px;
   column-gap: 2%;
 `;
-
 const Element = styled.div`
   position: relative;
   width: 350px;
   background: #343A40;
 `;
-
 const Name = styled.div`
   margin: 15px auto;
   text-align: center;
@@ -89,7 +82,6 @@ const Name = styled.div`
   font-size: 18px;
   color: #FFFFFF;
 `
-
 const Overlay = styled.div`
   position: absolute;
   top: 0;
@@ -102,7 +94,6 @@ const Overlay = styled.div`
   transition: .5s ease;
   background-color: #000;
 `
-
 const Container = styled.div`
   position: relative;
   width: 350px;
@@ -110,13 +101,11 @@ const Container = styled.div`
       opacity: 0.75;
     }
 `
-
 const Img = styled.img`
   display: block;
   width: 100%;
   height: auto;
 `;
-
 const TextUl = styled.ul`
   color: white;
   text-align:center;
@@ -130,8 +119,6 @@ const TextUl = styled.ul`
 
   }
 `
-
-
 
 function BrandPage() {
 
@@ -154,8 +141,6 @@ function BrandPage() {
           {(brand?.info.category) ? <P className='table'>{brand.info.category}</P> : ""}
           {(brand?.info.yearCreation) ? <P className='bold table'>Год основания:</P> : ""}
           {(brand?.info.yearCreation) ? <P className='table'>{brand.info.yearCreation}</P> : ""}
-          {(brand?.info.yearDeath) ? <P className='bold table'>Год закрытия:</P> : ""}
-          {(brand?.info.yearDeath) ? <P className='table'>{brand.info.yearDeath}</P> : ""}
           {(brand?.info.founders) ? <P className='bold table'>Основатели:</P> : ""}
           {(brand?.info.founders) ? <P className='table'>{brand.info.founders}</P> : ""}
           {(brand?.models) ? <P className='bold table'>Количество моделей:</P> : ""}
@@ -204,22 +189,23 @@ function BrandPage() {
     );
   }
 
-  if (brand) {
     return (
+      <>
+      <Header />
       <div>
         <Link to='/'><CrossSvg stroke="black" /></Link>
         <BoxRow>
           <BoxColumn>
-            <Img src={brand.logo} />
-            <NameBrend><LikeSvg /> {brand.name}</NameBrend>
+            <Img src={brand?.logo} />
+            <NameBrend><LikeSvg /> {brand?.name}</NameBrend>
           </BoxColumn>
-          {(brand.info) ? <InfoTable /> : ''}
+          {(brand?.info) ? <InfoTable /> : ''}
         </BoxRow>
-        {(brand.info.about) ? <AboutBrand /> : ''}
-        {(brand.models) ? <AllModelsСards /> : ''}
+        {(brand?.info.about) ? <AboutBrand /> : ''}
+        {(brand?.models) ? <AllModelsСards /> : ''}
       </div>
+      </>
     );
-  } else return <Home />;
 
 };
 
