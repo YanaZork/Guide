@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from 'styled-components';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate, Link } from "react-router-dom";
-import { sendPasswordReset, auth } from "../../../api/implementation/firebase/firebaseApp";
+import { sendPasswordReset, getAuth } from "../../../api/service/auth/auth";
 import { ReactComponent as CrossSvg } from '../../../svg/cross.svg';
 
 const Box = styled.div`
@@ -137,7 +137,7 @@ function Reset() {
   const [counter, setCounter] = useState(20);
   const [isCounting, setIsCounting] = useState(false);
   const [email, setEmail] = useState("");
-  const [user, loading] = useAuthState(auth);
+  const [user, loading] = useAuthState(getAuth());
   const navigate = useNavigate();
   const [flag, setFlag] = useState(true);
   const [err, setErr] = useState('');
@@ -163,7 +163,7 @@ function Reset() {
   function Сheck(email: string) {
     let regexp = new RegExp('.+@.+[.].+');
     if (regexp.test(email)) {
-      sendPasswordReset(email).then(resp => {
+      sendPasswordReset(email).then((resp: boolean | ((prevState: boolean) => boolean)) => {
         setFlag(resp);
         resp ? setErr('') : setErr('Такой почты нет');
         if (resp) {

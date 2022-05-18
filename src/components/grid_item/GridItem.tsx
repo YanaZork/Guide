@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ReactComponent as LikeSvg } from '../.././svg/like.svg';
@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import { getBrands } from '../.././api/service/brands/brands';
 import { Brand } from '../.././types/Brand';
 import '@fontsource/jost';
+import useAuth from '../../context/Auth/hooks/useAuth';
+import { updateLikes } from '../../api/service/users/users';
 
 const Grid = styled.div`
   margin: 20px 10%;
@@ -22,16 +24,16 @@ const Element = styled.div`
   position: relative;
   cursor: pointer;
   &.separator {
-    background-color: #F2F5F7;
+    background-color: #f2f5f7;
     grid-column: 1;
-    
+
     & p {
       position: relative;
       text-align: center;
       top: 45%;
       transform: translateY(-50%);
       font-family: 'Jura';
-      color: #D9E2E7;
+      color: #d9e2e7;
       font-size: 120px;
     }
   }
@@ -57,9 +59,9 @@ const Like = styled.div`
   left: 80%;
 `;
 
-
 const GridItem = () => {
   const [brands, setBrands] = useState<Brand[]>([]);
+  const { currentUser, updateUser } = useAuth();
 
   useEffect(() => {
     getBrands().then((resp) => {
@@ -67,7 +69,31 @@ const GridItem = () => {
     });
   }, []);
 
+  const onLike = useCallback(
+    async (event: React.MouseEvent<HTMLElement>, brand: Brand) => {
+      event.preventDefault();
+      if (currentUser) {
+        const newLikes = await updateLikes(currentUser?.uid, brand.name);
+        updateUser(newLikes);
+      }
+    },
+    [currentUser, updateUser]
+  );
 
+  const getColor = useCallback(
+    (like: string) => {
+      if (
+        currentUser &&
+        currentUser.likes &&
+        currentUser?.likes?.indexOf(like) !== -1
+      ) {
+        return '#912121';
+      }
+
+      return '#C4C4C4';
+    },
+    [currentUser]
+  );
 
   let letter = '';
   const SortAlph = brands.map((brand) => {
@@ -84,7 +110,13 @@ const GridItem = () => {
               <Wrapper>
                 <Img src={brand.logo} />
               </Wrapper>
-              <Like><LikeSvg fill={"#C4C4C4"} /></Like>
+              <Like
+                onClick={(event: React.MouseEvent<HTMLElement>) => {
+                  onLike(event, brand);
+                }}
+              >
+                <LikeSvg fill={getColor(brand.name)} />
+              </Like>
             </Link>
           </Element>
         </React.Fragment>
@@ -97,17 +129,19 @@ const GridItem = () => {
           <Wrapper>
             <Img src={brand.logo} />
           </Wrapper>
-          <Like><LikeSvg fill={"#C4C4C4"} /></Like>
+          <Like
+            onClick={(event: React.MouseEvent<HTMLElement>) => {
+              onLike(event, brand);
+            }}
+          >
+            <LikeSvg fill={getColor(brand.name)} />
+          </Like>
         </Link>
       </Element>
     );
-  })
+  });
 
-  return (
-    <Grid>
-      {SortAlph}
-    </Grid>
-  );
+  return <Grid>{SortAlph}</Grid>;
 };
 
 export default GridItem;

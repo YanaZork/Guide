@@ -4,10 +4,10 @@ import { ReactComponent as GoogleIconSvg } from '../../../svg/google-icon.svg';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import {
-  auth,
+  getAuth,
   registerWithEmailAndPassword,
   signInWithGoogle
-} from "../../../api/implementation/firebase/firebaseApp";
+} from "../../../api/service/auth/auth"
 
 const Text = styled.input`
   margin-bottom: 15px;
@@ -74,7 +74,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [user, loading] = useAuthState(auth);
+  const [user, loading] = useAuthState(getAuth());
   const navigate = useNavigate();
 
   if (user) navigate("/");
