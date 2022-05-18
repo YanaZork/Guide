@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import styled from 'styled-components';
 import Alphabetically from '../../components/sorting/alphabetically';
 import ByCountry from '../../components/sorting/by_country';
@@ -8,6 +6,8 @@ import Header from '../../components/header';
 import '@fontsource/jost';
 import '@fontsource/josefin-slab';
 import '@fontsource/jura';
+import { FilterProvider } from '../../context/Filter/FilterContext';
+import useFilter from '../../context/Filter/hooks/userFilter';
 
 const Box = styled.div`
   display: flex;
@@ -38,27 +38,34 @@ const Hr = styled.hr`
 	border-bottom: 2px solid #aaa;
 `
 
-function Home() {
+function HomeWithouFilter() {
 
-  const [filter, setFilter] = useState<Filter>(Filter.byAlphabetically);
-  
+  const {filterBy, setFilterBy} = useFilter();
 
   return (
     <>
       <Header />
       <Box>
         <P 
-          onClick={() => { setFilter(Filter.byAlphabetically) }}
-          className={filter === Filter.byAlphabetically? 'active':''}
+          onClick={() => { setFilterBy(Filter.byAlphabetically) }}
+          className={filterBy === Filter.byAlphabetically? 'active':''}
         >по алфавиту</P>
         <P 
-          onClick={() => { setFilter(Filter.byCountry) }}
-          className={filter === Filter.byCountry? 'active':''}
+          onClick={() => { setFilterBy(Filter.byCountry) }}
+          className={filterBy === Filter.byCountry? 'active':''}
         >по странам</P>
       </Box>
       <Hr />
-      {filter === Filter.byAlphabetically ? <Alphabetically /> : <ByCountry />}
+      {filterBy === Filter.byAlphabetically ? <Alphabetically /> : <ByCountry />}
     </>
+  );
+}
+
+function Home() {
+  return (
+    <FilterProvider>
+     <HomeWithouFilter/>
+    </FilterProvider>
   );
 }
 

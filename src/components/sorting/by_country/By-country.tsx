@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import GridItem from '../../grid_item';
 
 import '@fontsource/jura';
+import useFilter from '../../../context/Filter/hooks/userFilter';
 
 const Box = styled.div`
 font-family: Jura;
@@ -10,7 +11,12 @@ display: grid;
 grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
 grid-auto-rows: minmax(44px, 1fr);;
 `
-const Flag = styled.img`
+
+interface Active {
+  active?: boolean;
+}
+
+const Flag = styled.img<Active>`
 padding: 5px;
 cursor: pointer;
 transition: all 0.3s ease;
@@ -21,9 +27,12 @@ transition: all 0.3s ease;
 &:active {
   filter: drop-shadow(0 0 10px #38930D);
 }
+filter: ${(props) => (props.active ? 'drop-shadow(0 0 10px #007934)' : '')};
 `
 
-const P = styled.p`
+
+
+const P = styled.p<Active>`
 font-size: 26px;
 font-weight: 400;
 padding: 5px;
@@ -33,10 +42,13 @@ white-space: nowrap;
   transition: all 0.3s ease;
   color: #38930D;
 }
+color: ${(props) => (props.active ? '#38930d' : '#000000')};
 `
 
 // переделать в виде функции.
 const ByCountry = () => {
+
+  const { filterValue, setFilterValue } = useFilter();
 
   return (
     <>

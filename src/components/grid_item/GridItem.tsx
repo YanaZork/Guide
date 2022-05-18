@@ -9,6 +9,7 @@ import { Brand } from '../.././types/Brand';
 import '@fontsource/jost';
 import useAuth from '../../context/Auth/hooks/useAuth';
 import { updateLikes } from '../../api/service/users/users';
+import useFilter from '../../context/Filter/hooks/userFilter';
 
 const Grid = styled.div`
   margin: 20px 10%;
@@ -60,14 +61,27 @@ const Like = styled.div`
 `;
 
 const GridItem = () => {
+  const [initialBrands, setInitialBrands] = useState<Brand[]>([]);
   const [brands, setBrands] = useState<Brand[]>([]);
+
   const { currentUser, updateUser } = useAuth();
+  const {filterValue} = useFilter();
 
   useEffect(() => {
     getBrands().then((resp) => {
-      setBrands(resp);
+      setInitialBrands(resp);
+      setBrands(resp)
     });
   }, []);
+
+  useEffect(() => {
+    if(filterValue){
+      setBrands(initialBrands.filter(brand => brand.name.indexOf(filterValue) === 0));
+  } else {
+    setBrands(initialBrands);
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filterValue]);
 
   const onLike = useCallback(
     async (event: React.MouseEvent<HTMLElement>, brand: Brand) => {

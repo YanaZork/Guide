@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import GridItem from '../../grid_item';
 
 import '@fontsource/jura';
+import useFilter from '../../../context/Filter/hooks/userFilter';
 
 const Box = styled.div`
   margin: 20px 10% 30px 10%;
@@ -12,7 +13,11 @@ const Box = styled.div`
   font-family: Jura;
 `;
 
-const P = styled.p`
+interface LetterStyle {
+  active: boolean;
+}
+
+const P = styled.p<LetterStyle>`
   font-size: 26px;
   font-weight: 400;
   padding: 4px;
@@ -20,43 +25,66 @@ const P = styled.p`
   white-space: nowrap;
   &:hover {
     transition: all 0.3s ease;
-    color: #38930D;
+    color: #38930d;
   }
-`
 
+  color: ${(props) => (props.active ? '#38930d' : '#000000')};
+`;
 
 const Alphabetically = () => {
+  const alph = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
+  ];
+  const { filterValue, setFilterValue } = useFilter();
+
   return (
     <>
-    <Box>
-      <P>A</P>
-      <P>B</P>
-      <P>C</P>
-      <P>D</P>
-      <P>E</P>
-      <P>F</P>
-      <P>G</P>
-      <P>H</P>
-      <P>I</P>
-      <P>J</P>
-      <P>K</P>
-      <P>L</P>
-      <P>M</P>
-      <P>N</P>
-      <P>O</P>
-      <P>P</P>
-      <P>Q</P>
-      <P>R</P>
-      <P>S</P>
-      <P>T</P>
-      <P>U</P>
-      <P>V</P>
-      <P>W</P>
-      <P>X</P>
-      <P>Y</P>
-      <P>Z</P>
-      <P>Все марки</P>
-    </Box>
+      <Box>
+        {alph.map((letter) => (
+          <P
+            active={letter === filterValue}
+            key={letter}
+            onClick={() => {
+              setFilterValue(letter);
+            }}
+          >
+            {letter}
+          </P>
+        ))}
+        <P
+          active={filterValue === ''}
+          onClick={() => {
+            setFilterValue('');
+          }}
+        >
+          Все марки
+        </P>
+      </Box>
       <GridItem />
     </>
   );
