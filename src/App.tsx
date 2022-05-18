@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import FirebaseApp from './api/implementation/firebase/firebaseApp';
 import Reset from './components/authorization/Reset';
 import Authorization from './components/authorization';
+import { AuthProvider } from './context/Auth/AuthContext';
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
   }, [firebaseApp]);
 
   return (
-    <>
+    <AuthProvider>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/:name' element={<BrandPage />} />
@@ -27,7 +28,7 @@ function App() {
         <Route path='reset' element={<Reset />} />
         <Route path="*" element={<Home />} />
       </Routes>
-    </>
+    </AuthProvider>
   );
 }
 

@@ -1,17 +1,12 @@
 import styled from 'styled-components';
 
-import React, { useCallback, useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useNavigate } from "react-router-dom";
-import { auth, db, logout } from "../../api/implementation/firebase/firebaseApp";
-import { query, collection, getDocs, where } from "firebase/firestore";
-
 import { ReactComponent as LogInSvg } from '../../svg/login.svg';
 import { ReactComponent as MagnifierSvg } from '../../svg/magnifier.svg';
 import '@fontsource/jost';
 import '@fontsource/josefin-slab';
 import '@fontsource/jura';
 import { Link } from 'react-router-dom';
+import useAuth from '../../context/Auth/hooks/useAuth';
 
 const HeaderStyle = styled.header`
   display: flex;
@@ -37,7 +32,7 @@ const Title = styled.h1`
   font-weight: 400;
 `;
 const TextLogo = styled.p`
-  font-family: "Jura";
+  font-family: 'Jura';
   font-size: 14px;
   font-weight: 500;
   line-height: 19px;
@@ -83,29 +78,11 @@ const Button = styled.button`
   border: none;
 `;
 
-
 const Header = () => {
-
-  const [user, loading] = useAuthState(auth);
-  const [name, setName] = useState("");
-  const navigate = useNavigate();
-  const fetchUserName = useCallback(async () => {
-    try {
-      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
-      const doc = await getDocs(q);
-      const data = doc.docs[0].data();
-      setName(data.name);
-    } catch (err) {
-    }
-  }, [user?.uid]);
-  
-  useEffect(() => {
-    if (loading) return;
-    fetchUserName();
-  }, [user, loading, navigate, fetchUserName]);
+  const { currentUser, logout } = useAuth();
 
 const onLogout = () => {
-  logout().then(() => {setName("")}); 
+  logout();
 }
 
   return (
@@ -126,11 +103,15 @@ const onLogout = () => {
         </Form>
 
         <Box>
-          {name ?
-            <Button><LogIn onClick={onLogout}>{name}</LogIn></Button>
-          :
-            <Link to="/authorization"><LogIn>Войти</LogIn></Link>
-          }
+          {currentUser ? (
+            <Button>
+              <LogIn onClick={() => {onLogout()}}>{currentUser.name}</LogIn>
+            </Button>
+          ) : (
+            <Link to='/authorization'>
+              <LogIn>Войти</LogIn>
+            </Link>
+          )}
           <LogInSvg />
         </Box>
       </Box>
