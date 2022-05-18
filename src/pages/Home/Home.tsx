@@ -9,13 +9,12 @@ import '@fontsource/jost';
 import '@fontsource/josefin-slab';
 import '@fontsource/jura';
 
-
 const Box = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-family: Jura;
+  font-family: 'Jura';
 `;
 
 const P = styled.p`
@@ -23,14 +22,13 @@ const P = styled.p`
   font-weight: 400;
   padding: 10px 10%;
   cursor: pointer;
-  -ms-user-select: none;
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  transition: all 0.3s ease;
   &:hover {
     
     color: #38930D;
+  }
+  &.active {
+    color:#38930D;
+    font-weight: 600;
   }
 `
 
@@ -43,14 +41,20 @@ const Hr = styled.hr`
 function Home() {
 
   const [filter, setFilter] = useState<Filter>(Filter.byAlphabetically);
+  
 
   return (
     <>
-    
       <Header />
       <Box>
-        <P onClick={() => { setFilter(Filter.byAlphabetically) }}>по алфавиту</P>
-        <P onClick={() => { setFilter(Filter.byCountry) }}>по странам</P>
+        <P 
+          onClick={() => { setFilter(Filter.byAlphabetically) }}
+          className={filter === Filter.byAlphabetically? 'active':''}
+        >по алфавиту</P>
+        <P 
+          onClick={() => { setFilter(Filter.byCountry) }}
+          className={filter === Filter.byCountry? 'active':''}
+        >по странам</P>
       </Box>
       <Hr />
       {filter === Filter.byAlphabetically ? <Alphabetically /> : <ByCountry />}

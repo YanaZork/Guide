@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as GoogleIconSvg } from '../../../svg/google-icon.svg';
-import { Link, useNavigate } from "react-router-dom";
-import { auth, signInWithGoogle, logInWithEmailAndPassword } from "../../../api/implementation/firebase/firebaseApp";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  signInWithGoogle,
+  logInWithEmailAndPassword,
+  getAuth,
+} from '../../../api/service/auth/auth';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import useAuth from '../../../context/Auth/hooks/useAuth';
 
 const Text = styled.input`
   margin-bottom: 15px;
@@ -15,9 +20,9 @@ const Text = styled.input`
   font-weight: 500;
   border: 0;
   outline: none;
-  background: #E3E3E3;
-  &:valid  {
-    background: #E8F0FE;
+  background: #e3e3e3;
+  &:valid {
+    background: #e8f0fe;
   }
   &::selection {
     color: white;
@@ -36,13 +41,13 @@ const Greed = styled.div`
   grid-template-columns: 1fr 1fr;
 `;
 const Button = styled.button`
-  margin: 0px 10px 0px 0px;  
+  margin: 0px 10px 0px 0px;
   padding: 10px;
   font-size: 24px;
   margin-bottom: 10px;
   border: none;
   color: white;
-  background-color: #38930D;
+  background-color: #38930d;
   border-radius: 5px;
   font-family: 'Jura';
   font-weight: 500;
@@ -60,31 +65,33 @@ const P = styled.p`
   &.flagTrue {
     display: none;
   }
-  &.flagFalse{
-    color:red;
-    margin-bottom:15px;
+  &.flagFalse {
+    color: red;
+    margin-bottom: 15px;
   }
 `;
 
 function Login() {
   const [flag, setFlag] = useState(true);
   const [err, setErr] = useState('');
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, loading] = useAuthState(auth);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
 
-  if (user) navigate("/");
   useEffect(() => {
-    if (loading) return;
-  }, [loading]);
+    if (currentUser) navigate('/');
+  }, [currentUser, navigate]);
 
   function Сheck(email: string, password: string) {
     let regexpEmail = new RegExp('.+@.+[.].+');
     let regexpPassword = new RegExp('.{5}.+');
-    
+
     if (regexpEmail.test(email) && regexpPassword.test(password)) {
-      logInWithEmailAndPassword(email, password).then(resp => { setFlag(resp); setErr('Попробуйте другую почту') });
+      logInWithEmailAndPassword(email, password).then((resp) => {
+        setFlag(resp);
+        setErr('Попробуйте другую почту');
+      });
     } else if (!regexpEmail.test(email) || !regexpPassword.test(password)) {
       setFlag(false);
       setErr('Email или пароль введен некорректно');
@@ -96,33 +103,41 @@ function Login() {
       <P className={flag ? 'flagTrue' : 'flagFalse'}> {err} </P>
       <Text
         className={flag ? '' : 'error'}
-        type="text"
+        type='text'
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="E-mail"
+        placeholder='E-mail'
         required
       />
       <Text
         className={flag ? '' : 'error'}
-        type="password"
+        type='password'
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        placeholder='Password'
         required
       />
       <Greed>
-        <Button
-          onClick={() => Сheck(email, password)}
-        >Войти</Button>
-        <P>Войти с помощью:<br /> <GoogleIconSvg onClick={signInWithGoogle} style={{ cursor: 'pointer', marginTop: '5px', marginBottom: '5px' }} /></P>
-        <Link to="/reset" style={{
-          fontFamily: 'Jura',
-          fontSize: '18px',
-          textAlign: 'left'
-        }}>Забыли пароль?</Link>
-
+        <Button onClick={() => Сheck(email, password)}>Войти</Button>
+        <P>
+          Войти с помощью:
+          <br />{' '}
+          <GoogleIconSvg
+            onClick={signInWithGoogle}
+            style={{ cursor: 'pointer', marginTop: '5px', marginBottom: '5px' }}
+          />
+        </P>
+        <Link
+          to='/reset'
+          style={{
+            fontFamily: 'Jura',
+            fontSize: '18px',
+            textAlign: 'left',
+          }}
+        >
+          Забыли пароль?
+        </Link>
       </Greed>
-
     </>
   );
 }
