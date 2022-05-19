@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 import { ReactComponent as CrossSvg } from '../../svg/cross.svg';
-import { ReactComponent as LikeSvg } from '../.././svg/like.svg';
+//import { ReactComponent as LikeSvg } from '../.././svg/like.svg';
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { getBrands } from '../.././api/service/brands/brands';
 import { Brand } from '../.././types/Brand';
 import Header from '../../components/header';
-import '@fontsource/jost';
-import '@fontsource/josefin-slab';
-import '@fontsource/jura';
 
 const BoxRow = styled.div`
   display: flex;
@@ -156,7 +153,7 @@ function BrandPage() {
     return (
       <>
         <Hr />
-        <Title>О <span>{brand?.name}</span></Title>
+        <Title>Подробнее о <span>{brand?.name}</span></Title>
         <Text>{brand?.info.about}</Text>
       </>
     )
@@ -189,6 +186,7 @@ function BrandPage() {
     );
   }
 
+
     return (
       <>
       <Header />
@@ -197,7 +195,7 @@ function BrandPage() {
         <BoxRow>
           <BoxColumn>
             <Img src={brand?.logo} />
-            <NameBrend><LikeSvg /> {brand?.name}</NameBrend>
+            <NameBrend> {brand?.name}</NameBrend>
           </BoxColumn>
           {(brand?.info) ? <InfoTable /> : ''}
         </BoxRow>

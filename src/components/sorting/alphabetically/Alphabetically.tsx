@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 import GridItem from '../../grid_item';
-
-import '@fontsource/jura';
 import useFilter from '../../../context/Filter/hooks/userFilter';
 
 const Box = styled.div`
@@ -10,7 +8,7 @@ const Box = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-family: Jura;
+  font-family: 'Jura';
 `;
 
 interface LetterStyle {
@@ -23,11 +21,8 @@ const P = styled.p<LetterStyle>`
   padding: 4px;
   cursor: pointer;
   white-space: nowrap;
-  &:hover {
-    transition: all 0.3s ease;
-    color: #38930d;
-  }
-
+  transition: all 0.3s ease;
+  &:hover {color: #38930d;}
   color: ${(props) => (props.active ? '#38930d' : '#000000')};
 `;
 
@@ -37,7 +32,6 @@ const Alphabetically = () => {
     'B',
     'C',
     'D',
-    'E',
     'F',
     'G',
     'H',
@@ -53,12 +47,11 @@ const Alphabetically = () => {
     'R',
     'S',
     'T',
-    'U',
     'V',
     'W',
-    'X',
-    'Y',
     'Z',
+    'Ё',
+    'У'
   ];
   const { filterValue, setFilterValue } = useFilter();
 

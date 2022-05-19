@@ -6,7 +6,6 @@ import { ReactComponent as LikeSvg } from '../.././svg/like.svg';
 import { useEffect, useState } from 'react';
 import { getBrands } from '../.././api/service/brands/brands';
 import { Brand } from '../.././types/Brand';
-import '@fontsource/jost';
 import useAuth from '../../context/Auth/hooks/useAuth';
 import { updateLikes } from '../../api/service/users/users';
 import useFilter from '../../context/Filter/hooks/userFilter';
@@ -65,7 +64,7 @@ const GridItem = () => {
   const [brands, setBrands] = useState<Brand[]>([]);
 
   const { currentUser, updateUser } = useAuth();
-  const {filterValue} = useFilter();
+  const { filterValue } = useFilter();
 
   useEffect(() => {
     getBrands().then((resp) => {
@@ -75,12 +74,12 @@ const GridItem = () => {
   }, []);
 
   useEffect(() => {
-    if(filterValue){
+    if (filterValue) {
       setBrands(initialBrands.filter(brand => brand.name.indexOf(filterValue) === 0));
-  } else {
-    setBrands(initialBrands);
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    } else {
+      setBrands(initialBrands);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterValue]);
 
   const onLike = useCallback(
@@ -101,7 +100,7 @@ const GridItem = () => {
         currentUser.likes &&
         currentUser?.likes?.indexOf(like) !== -1
       ) {
-        return '#912121';
+        return '#FF4141';
       }
 
       return '#C4C4C4';
@@ -113,6 +112,7 @@ const GridItem = () => {
   const SortAlph = brands.map((brand) => {
     if (letter !== brand.name.charAt(0)) {
       letter = brand.name.charAt(0);
+
       return (
         <React.Fragment key={brand.name}>
           <Element className='separator'>

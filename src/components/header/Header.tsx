@@ -2,9 +2,6 @@ import styled from 'styled-components';
 
 import { ReactComponent as LogInSvg } from '../../svg/login.svg';
 import { ReactComponent as MagnifierSvg } from '../../svg/magnifier.svg';
-import '@fontsource/jost';
-import '@fontsource/josefin-slab';
-import '@fontsource/jura';
 import { Link } from 'react-router-dom';
 import useAuth from '../../context/Auth/hooks/useAuth';
 

@@ -1,8 +1,6 @@
 import styled from 'styled-components'
 import GridItem from '../../grid_item';
 
-import '@fontsource/jura';
-
 const Box = styled.div`
 font-family: Jura;
 margin: 20px 10% 30px 10%;

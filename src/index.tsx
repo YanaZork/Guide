@@ -4,6 +4,9 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
 import { createGlobalStyle } from 'styled-components'
+import '@fontsource/jost';
+import '@fontsource/josefin-slab';
+import '@fontsource/jura';
 
 const Global = createGlobalStyle`
 *,
