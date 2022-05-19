@@ -5,9 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {
   signInWithGoogle,
   logInWithEmailAndPassword,
-  getAuth,
 } from '../../../api/service/auth/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import useAuth from '../../../context/Auth/hooks/useAuth';
 
 const Text = styled.input`

@@ -2,7 +2,6 @@ import { useCallback, useContext, useEffect } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { getAuth, logout as authLogout } from '../../../api/service/auth/auth';
 import { fetchUser } from '../../../api/service/users/users';
-import { User } from '../../../types/User.model';
 import { AuthContext, AuthDispatchContext } from '../AuthContext';
 
 /**

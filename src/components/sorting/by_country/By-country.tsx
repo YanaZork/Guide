@@ -2,7 +2,6 @@ import styled from 'styled-components'
 import GridItem from '../../grid_item';
 
 import '@fontsource/jura';
-import useFilter from '../../../context/Filter/hooks/userFilter';
 
 const Box = styled.div`
 font-family: Jura;
@@ -48,7 +47,7 @@ color: ${(props) => (props.active ? '#38930d' : '#000000')};
 // переделать в виде функции.
 const ByCountry = () => {
 
-  const { filterValue, setFilterValue } = useFilter();
+  // const { filterValue, setFilterValue } = useFilter();
 
   return (
     <>
