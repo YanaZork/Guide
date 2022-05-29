@@ -26,7 +26,6 @@ const Element = styled.div`
   &.separator {
     background-color: #f2f5f7;
     grid-column: 1;
-
     & p {
       position: relative;
       text-align: center;
@@ -58,6 +57,14 @@ const Like = styled.div`
   bottom: 5px;
   left: 80%;
 `;
+
+const P = styled.p`
+  font-family: 'Jura';
+  color: #d9e2e7;
+  font-size: 60px;
+  text-align: center;
+`
+
 
 const GridItem = () => {
   const [initialBrands, setInitialBrands] = useState<Brand[]>([]);
@@ -158,4 +165,81 @@ const GridItem = () => {
   return <Grid>{SortAlph}</Grid>;
 };
 
+const GridItemLike = () => {
+  const [brands, setBrands] = useState<Brand[]>([]);
+
+  const { currentUser, updateUser } = useAuth();
+
+  useEffect(() => {
+    getBrands().then((resp) => {
+      setBrands(resp)
+    });
+  }, []);
+
+
+  const onLike = useCallback(
+    async (event: React.MouseEvent<HTMLElement>, brand: Brand) => {
+      event.preventDefault();
+      if (currentUser) {
+        const newLikes = await updateLikes(currentUser?.uid, brand.name);
+        updateUser(newLikes);
+      }
+    },
+    [currentUser, updateUser]
+  );
+
+  const getColor = useCallback(
+    (like: string) => {
+      if (
+        currentUser &&
+        currentUser.likes &&
+        currentUser?.likes?.indexOf(like) !== -1
+      ) {
+        return '#FF4141';
+      }
+
+      return '#C4C4C4';
+    },
+    [currentUser]
+  );
+
+  let counter = 0;
+  const SortAlph = brands.map((brand) => {
+    if (getColor(brand.name) === '#FF4141') {
+      counter += 1;
+      return (
+        <Element key={brand.name}>
+          <Link to={`/${brand.name}`}>
+            <Text>{brand.name}</Text>
+            <Wrapper>
+              <Img src={brand.logo} />
+            </Wrapper>
+            <Like
+              onClick={(event: React.MouseEvent<HTMLElement>) => {
+                onLike(event, brand);
+              }}
+            >
+              <LikeSvg fill={getColor(brand.name)} />
+            </Like>
+          </Link>
+        </Element>
+      );
+    }
+  });
+
+  return (
+    <>
+      {counter === 0 ?
+        <>
+          <P>Ваше избранное пустое</P>
+        </>
+        :
+        <Grid>{SortAlph}</Grid>
+      }
+    </>
+  );
+}
+
 export default GridItem;
+
+export { GridItemLike };

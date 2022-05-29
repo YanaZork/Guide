@@ -14,7 +14,7 @@ const Text = styled.input`
   border-radius: 50px;
   text-align: center;
   font-size: 18px;
-  font-family: jost;
+  font-family: 'Jost';
   font-weight: 500;
   border: 0;
   outline: none;

@@ -17,6 +17,7 @@ import {
 import FirebaseApplication from "../../implementation/firebase/firebaseApp";
 import database from "../../implementation/firestore/firestoreDatabase";
 
+// вход через google
 export const signInWithGoogle = async () => {
     try {
         const res = await signInWithPopup(getAuth(), new GoogleAuthProvider());

@@ -63,7 +63,6 @@ const P = styled.p`
   }
   &.activ {
     color: #38930D;
-    font-weight: 600;
   }
 `;
 const Hr = styled.hr`

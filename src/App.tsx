@@ -6,6 +6,7 @@ import FirebaseApp from './api/implementation/firebase/firebaseApp';
 import Reset from './components/authorization/Reset';
 import Authorization from './components/authorization';
 import { AuthProvider } from './context/Auth/AuthContext';
+import Favourites from './pages/Favourites/Favourites';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path='/:name' element={<BrandPage />} />
         <Route path='authorization' element={<Authorization />} />
         <Route path='reset' element={<Reset />} />
+        <Route path='favourites' element={<Favourites />}/>
         <Route path="*" element={<Home />} />
       </Routes>
     </AuthProvider>

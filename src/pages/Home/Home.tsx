@@ -30,6 +30,7 @@ const Hr = styled.hr`
 	border-bottom: 2px solid #aaa;
 `
 const Up = styled.div`
+  cursor: pointer;
   position: fixed;
 	right: 45px;
 	bottom: 45px;
