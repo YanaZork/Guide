@@ -204,7 +204,7 @@ const GridItemLike = () => {
   );
 
   let counter = 0;
-  const SortAlph = brands.map((brand) => {
+  const SortFav= brands.map((brand) => {
     if (getColor(brand.name) === '#FF4141') {
       counter += 1;
       return (
@@ -234,7 +234,7 @@ const GridItemLike = () => {
           <P>Ваше избранное пустое</P>
         </>
         :
-        <Grid>{SortAlph}</Grid>
+        <Grid>{SortFav}</Grid>
       }
     </>
   );

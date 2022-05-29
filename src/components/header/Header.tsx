@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { ReactComponent as LogInSvg } from '../../svg/login.svg';
@@ -137,7 +137,7 @@ const Header = () => {
                   :
                   <Link to='/favourites'>Избранное</Link>
               }</li>
-              <li><a href="#">Пройти тест</a></li>
+              <li><Link to='/'>Пройти тест</Link></li>
               <hr />
               <li><Link to='/' onClick={() => { onLogout() }}>Выход</Link></li>
             </Ul>
