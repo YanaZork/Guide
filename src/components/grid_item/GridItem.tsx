@@ -176,7 +176,6 @@ const GridItemLike = () => {
     });
   }, []);
 
-
   const onLike = useCallback(
     async (event: React.MouseEvent<HTMLElement>, brand: Brand) => {
       event.preventDefault();
@@ -204,7 +203,7 @@ const GridItemLike = () => {
   );
 
   let counter = 0;
-  const SortFav= brands.map((brand) => {
+  const SortFav = brands.map((brand) => {
     if (getColor(brand.name) === '#FF4141') {
       counter += 1;
       return (
@@ -224,6 +223,8 @@ const GridItemLike = () => {
           </Link>
         </Element>
       );
+    } else {
+      return(<></>);
     }
   });
 
