@@ -15,8 +15,6 @@ const P = styled.p`
   font-weight: 400;
   padding: 10px 10%;
   cursor: pointer;
-  &:hover {color: #007934;}
-  &.active {color:#38930D;}
 `
 const Hr = styled.hr`
   margin: 0 5% 50px 5%;

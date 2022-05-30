@@ -6,6 +6,7 @@ import Header from '../../components/header';
 import { FilterProvider } from '../../context/Filter/FilterContext';
 import useFilter from '../../context/Filter/hooks/userFilter';
 import { ReactComponent as UpSvg } from '../.././svg/up.svg';
+import { device } from '../../styled';
 
 const Box = styled.div`
   display: flex;
@@ -16,14 +17,30 @@ const Box = styled.div`
 `;
 
 const P = styled.p`
-  font-size: 26px;
   font-weight: 400;
   padding: 10px 10%;
   cursor: pointer;
   &:hover {color: #007934;}
   &.active {color:#38930D;}
+  @media ${device.mobileSS} {
+    font-size: 16px;
+  }
+  @media ${device.mobileS} {
+    font-size: 16px;
+  }
+  @media ${device.mobileM} {
+    font-size: 18px;
+  }
+  @media ${device.mobileL} {
+    font-size: 20px;
+  }
+  @media ${device.tablet} {
+    font-size: 24px;
+  }
+  @media ${device.laptopL} {
+    font-size: 28px;
+  }
 `
-
 const Hr = styled.hr`
   margin: 0px 5%;
 	border: none;
@@ -34,7 +51,6 @@ const Up = styled.div`
   position: fixed;
 	right: 45px;
 	bottom: 45px;
-
   &.a {
     display: none;
   }

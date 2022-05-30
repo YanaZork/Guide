@@ -224,7 +224,7 @@ const GridItemLike = () => {
         </Element>
       );
     } else {
-      return(<></>);
+      return(<React.Fragment key={brand.name}></React.Fragment>)
     }
   });
 

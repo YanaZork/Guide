@@ -5,22 +5,8 @@ import { Authorization } from '../.././types/Authorization.enum';
 import { ReactComponent as CrossSvg } from '../../svg/cross.svg';
 import Login from "./Login";
 import Register from "./Register";
+import { BoxAuthorization,  BoxFlex} from "../../styled";
 
-const Box = styled.div`
-  height: 100vh;
-  background-color: #343a40;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
-const BoxLogo = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 20px;
-  cursor: default;
-`;
 const Title = styled.h1`
   padding-right: 16px;
   font-family: 'Josefin Slab';
@@ -76,14 +62,14 @@ function Reset() {
 
   return (
     <>
-      <Box>
-        <BoxLogo>
+      <BoxAuthorization>
+        <BoxFlex style={{padding: '20px', cursor: 'default'}}>
           <Title>CarLogo</Title>
           <TextLogo>
             справочник
             <br /> автомобильных марок
           </TextLogo>
-        </BoxLogo>
+        </BoxFlex>
         <Container>
           <BoxList>
             <P 
@@ -99,7 +85,7 @@ function Reset() {
           <Hr />
           {authorization === Authorization.byLogin ? <Login /> : <Register />}
         </Container>
-      </Box>
+      </BoxAuthorization>
     </>
   );
 }

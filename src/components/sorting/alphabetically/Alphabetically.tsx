@@ -1,14 +1,27 @@
 import styled from 'styled-components';
 import GridItem from '../../grid_item';
 import useFilter from '../../../context/Filter/hooks/userFilter';
+import { device } from '../../../styled'
 
-const Box = styled.div`
-  margin: 20px 10% 30px 10%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+const BoxFlex = styled.div`
   font-family: 'Jura';
+
+  @media ${device.mobileSS} {
+    display: none;
+  }
+  @media ${device.mobileS} {
+    display: none;
+  }
+  @media ${device.tablet} {
+    font-size: 24px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  @media ${device.laptopL} {
+    font-size: 28px;
+  }
 `;
 
 interface LetterStyle {
@@ -16,7 +29,6 @@ interface LetterStyle {
 }
 
 const P = styled.p<LetterStyle>`
-  font-size: 26px;
   font-weight: 400;
   padding: 4px;
   cursor: pointer;
@@ -57,7 +69,7 @@ const Alphabetically = () => {
 
   return (
     <>
-      <Box>
+      <BoxFlex style={{margin: '20px 10% 30px 10%'}}>
         {alph.map((letter) => (
           <P
             active={letter === filterValue}
@@ -77,7 +89,7 @@ const Alphabetically = () => {
         >
           Все марки
         </P>
-      </Box>
+      </BoxFlex>
       <GridItem />
     </>
   );

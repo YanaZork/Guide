@@ -84,14 +84,17 @@ const Register = () => {
 
   function Сheck(name: string, email: string, password: string) {
 
-    let regexpEmail = new RegExp('.+@.+[.].+');
-    let regexpPassword = new RegExp('.{5}.+');
+    const regexpEmail = new RegExp('.+@.+[.].+');
+    const regexpPassword = new RegExp('.{5}.+');
 
-    if (name && regexpEmail.test(email) && regexpPassword.test(password)) {
+    if (name.length <= 35 && regexpEmail.test(email) && regexpPassword.test(password)) {
       registerWithEmailAndPassword(name, email, password).then(resp => { setFlag(resp); setErr('Данное имя, почта или пароль недоступно') });
     } else if (!name) {
       setFlag(false);
       setErr('Введите имя');
+    } else if (name.length > 35) {
+      setFlag(false);
+      setErr('Ваше имя слишком длинное');
     } else if (!regexpEmail.test(email) || !regexpPassword.test(password)) {
       setFlag(false);
       setErr('Email или пароль введен некорректно');

@@ -6,12 +6,21 @@ import { useEffect, useState } from 'react';
 import { getBrands } from '../.././api/service/brands/brands';
 import { Brand } from '../.././types/Brand';
 import Header from '../../components/header';
+import { device } from '../../styled';
 
 const BoxRow = styled.div`
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
+  @media ${device.mobileSS} {
+    flex-direction: column;
+  }
+  @media ${device.mobileS} {
+    flex-direction: column;
+  }
+  @media ${device.laptop} {
+    flex-direction: row;
+  }
 `;
 const BoxColumn = styled.div`
   display: flex;
@@ -20,7 +29,20 @@ const BoxColumn = styled.div`
 `;
 const GridTable = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
+  @media ${device.mobileSS} {
+    margin-top: 20px;
+    grid-template-columns: 1fr 1fr;
+  }
+  @media ${device.mobileS} {
+    margin-top: 20px;
+    grid-template-columns: 1fr 1fr;
+  }
+  @media ${device.tablet} {
+    grid-template-columns: 1fr 1.5fr;
+  }
+  @media ${device.laptop} {
+    margin-top: 0;
+  }
 `;
 const NameBrend = styled.h1`
   text-align: center;
@@ -29,48 +51,64 @@ const NameBrend = styled.h1`
   font-weight: 700;
 `;
 const P = styled.p`
-font-family: 'Jost';
-font-size: 21px;
-&.bold{
-  font-weight: 700;
-}
-&.table{
-  padding: 5px 10px;
-  border-bottom: 1px solid black;
-}
+  font-family: 'Jost';
+  &.bold{ font-weight: 700; }
+  &.table{
+    border-bottom: 1px solid black;
+    padding: 5px 10px;
+    font-size: 21px;
+  }
 `;
 const Title = styled.h2`
-text-align: center;
-font-family: 'Jura';
-font-weight: 400;
-font-size: 30px;
-margin-bottom: 15px;
-span {
-  font-family: 'Josefin Slab';
-  font-weight: 600;
-}
+  text-align: center;
+  font-family: 'Jura';
+  font-weight: 400;
+  font-size: 30px;
+  margin-bottom: 15px;
+  span {
+    font-family: 'Josefin Slab';
+    font-weight: 600;
+  }
 `;
 const Text = styled.div`
-text-align: justify;
-font-family: 'Jura';
-padding: 10px 6.75%;
-font-size: 20px;
-line-height: 30px;
+  text-align: justify;
+  font-family: 'Jura';
+  padding: 10px 6.75%;
+  font-size: 20px;
+  line-height: 30px;
 `;
 const Hr = styled.hr`
-margin: 35px 0px 15px 0px;
+  margin: 35px 0px 15px 0px;
 `;
 const Greed = styled.div`
   display: grid;
-  margin: 40px 6.75%;
   grid-template-columns: repeat(auto-fill, 350px);
   row-gap: 15px;
   column-gap: 2%;
+  margin: 40px 10px 40px 6.75%;
+  @media ${device.mobileSS} {
+    grid-template-columns: repeat(auto-fill, 250px);
+  }
+  @media ${device.mobileS} {
+    grid-template-columns: repeat(auto-fill, 250px);
+  }
+
+  @media ${device.mobileM} {
+    grid-template-columns: repeat(auto-fill, 350px);
+  }
 `;
 const Element = styled.div`
   position: relative;
-  width: 350px;
   background: #343A40;
+  @media ${device.mobileSS} {
+    width: 250px;
+  }
+  @media ${device.mobileS} {
+    width: 250px;
+  }
+  @media ${device.mobileM} {
+    width: 350px;
+  }
 `;
 const Name = styled.div`
   margin: 15px auto;
@@ -86,22 +124,47 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   height: 100%;
-  width: 100%;
   opacity: 0;
   transition: .5s ease;
   background-color: #000;
+  @media ${device.mobileSS} {
+    width: 250px;
+  }
+  @media ${device.mobileS} {
+    width: 250px;
+  }
+  @media ${device.mobileM} {
+    width: 100%;
+  }
 `
 const Container = styled.div`
   position: relative;
-  width: 350px;
+  
   ${Overlay}:hover{
-      opacity: 0.75;
-    }
+    opacity: 0.75;
+  }
+  @media ${device.mobileSS} {
+    width: 250px;
+  }
+  @media ${device.mobileS} {
+    width: 250px;
+  }
+  @media ${device.mobileM} {
+    width: 350px;
+  }
 `
 const Img = styled.img`
   display: block;
-  width: 100%;
   height: auto;
+  @media ${device.mobileSS} {
+    width: 250px;
+  }
+  @media ${device.mobileS} {
+    width: 250px;
+  }
+  @media ${device.mobileM} {
+    width: 100%;
+  }
 `;
 const TextUl = styled.ul`
   color: white;
@@ -113,7 +176,6 @@ const TextUl = styled.ul`
     list-style-type: none;
     font-family: 'Jura';
     font-size: 20px;
-
   }
 `
 
@@ -187,8 +249,8 @@ function BrandPage() {
   }
 
 
-    return (
-      <>
+  return (
+    <>
       <Header />
       <div>
         <Link to='/'><CrossSvg stroke="black" /></Link>
@@ -202,9 +264,8 @@ function BrandPage() {
         {(brand?.info.about) ? <AboutBrand /> : ''}
         {(brand?.models) ? <AllModelsСards /> : ''}
       </div>
-      </>
-    );
-
+    </>
+  );
 };
 
 export default BrandPage;

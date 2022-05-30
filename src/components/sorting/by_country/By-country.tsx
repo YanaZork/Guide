@@ -2,17 +2,15 @@ import styled from 'styled-components'
 import GridItem from '../../grid_item';
 
 const Box = styled.div`
-font-family: Jura;
+font-family: 'Jura';
 margin: 20px 10% 30px 10%;
 display: grid;
 grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
-grid-auto-rows: minmax(44px, 1fr);;
+grid-auto-rows: minmax(44px, 1fr);
 `
-
 interface Active {
   active?: boolean;
 }
-
 const Flag = styled.img<Active>`
 padding: 5px;
 cursor: pointer;
@@ -26,8 +24,6 @@ transition: all 0.3s ease;
 }
 filter: ${(props) => (props.active ? 'drop-shadow(0 0 10px #007934)' : '')};
 `
-
-
 
 const P = styled.p<Active>`
 font-size: 26px;

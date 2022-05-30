@@ -4,22 +4,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { sendPasswordReset, getAuth } from "../../../api/service/auth/auth";
 import { ReactComponent as CrossSvg } from '../../../svg/cross.svg';
+import { BoxAuthorization, BoxFlex } from "../../../styled";
 
-const Box = styled.div`
-  height: 100vh;
-  background-color: #343a40;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
-const BoxLogo = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 20px;
-  cursor: default;
-`;
 const Title = styled.h1`
   padding-right: 16px;
   font-family: 'Josefin Slab';
@@ -106,7 +92,7 @@ const Button = styled.button`
   }
 `;
 const P = styled.p`
-  font-family: Jura;
+  font-family: 'Jura';
   font-size: 18px;
   font-weight: 400;
   cursor: default;
@@ -161,7 +147,7 @@ function Reset() {
   }, [loading, isCounting, counter]);
 
   function Сheck(email: string) {
-    let regexp = new RegExp('.+@.+[.].+');
+    const regexp = new RegExp('.+@.+[.].+');
     if (regexp.test(email)) {
       sendPasswordReset(email).then((resp: boolean | ((prevState: boolean) => boolean)) => {
         setFlag(resp);
@@ -177,14 +163,14 @@ function Reset() {
   }
   return (
     <>
-      <Box>
-        <BoxLogo>
+      <BoxAuthorization>
+        <BoxFlex style={{padding: '20px', cursor: 'default'}}>
           <Title>CarLogo</Title>
           <TextLogo>
             справочник
             <br /> автомобильных марок
           </TextLogo>
-        </BoxLogo>
+        </BoxFlex>
         <Container>
           <BoxList>
             <Window>Восстановление аккаунта</Window>
@@ -210,7 +196,7 @@ function Reset() {
           </Button>
           {isCounting ? <P>Отправить повторно через: {counter}</P> : ''}
         </Container>
-      </Box>
+      </BoxAuthorization>
     </>
   );
 }

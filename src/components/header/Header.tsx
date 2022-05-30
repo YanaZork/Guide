@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { ReactComponent as LogInSvg } from '../../svg/login.svg';
-import { ReactComponent as MagnifierSvg } from '../../svg/magnifier.svg';
+//import { ReactComponent as MagnifierSvg } from '../../svg/magnifier.svg';
 import { Link } from 'react-router-dom';
 import useAuth from '../../context/Auth/hooks/useAuth';
-
+import { BoxFlex, device } from '../../styled';
 
 const HeaderStyle = styled.header`
   display: flex;
@@ -13,30 +13,57 @@ const HeaderStyle = styled.header`
   justify-content: space-between;
   align-items: center;
   align-content: flex-start;
-  padding: 20px 15px 15px 15px;
   background-color: #343a40;
   color: #fff;
   cursor: default;
-`;
-const Box = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  color: #fff;
+  padding: 20px 5% 15px 5%;
 `;
 
 const Title = styled.h1`
   padding-right: 16px;
   font-family: 'Josefin Slab';
-  font-size: 64px;
   font-weight: 400;
+
+  @media ${device.mobileSS} {
+    &.max {display:none;}
+  }
+  @media ${device.mobileS} {
+    &.max {display:none;}
+  }
+  @media ${device.mobileL} {
+    font-size: 36px;
+    &.min {display:none;}
+    &.max {display:block;}
+  }
+  @media ${device.tablet} {
+    font-size: 48px;
+  }
+  @media ${device.laptop} {
+    font-size: 56px;
+  }
+  @media ${device.laptopL} {
+    font-size: 64px;
+  }
 `;
 const TextLogo = styled.p`
   font-family: 'Jura';
-  font-size: 14px;
   font-weight: 500;
   line-height: 19px;
+
+  @media ${device.mobileSS} {
+    font-size: 9px;
+  }
+  @media ${device.mobileS} {
+    font-size: 9px;
+  }
+  @media ${device.mobileM} {
+    font-size: 12px;
+  }
+  @media ${device.laptop} {
+    font-size: 14px;
+  }
 `;
+/*
 const Form = styled.form`
   position: relative;
   width: 300px;
@@ -60,15 +87,30 @@ const SearchBar = styled.input`
   height: 38px;
   background: #fff;
   padding-left: 15px;
-  font-family: Jost;
+  font-family: 'Jost';
   font-size: 110%;
 `;
+*/
 const LogIn = styled.p`
   font-family: 'Jura';
-  font-size: 24px;
   font-weight: 400;
   margin-right: 5px;
   color: #fff;
+  @media ${device.mobileSS} {
+    font-size: 14px;
+  }
+  @media ${device.mobileS} {
+    font-size: 14px;
+  }
+  @media ${device.mobileL} {
+    font-size: 18px;
+  }
+  @media ${device.laptop} {
+    font-size: 24px;
+  }
+  @media ${device.desktop} {
+    font-size: 32px;
+  } 
 `;
 const Button = styled.button`
   display: flex;
@@ -80,7 +122,8 @@ const Button = styled.button`
 const Ul = styled.ul`
   position: absolute;
   display: none;
-  top: 80px; right: 30px;
+  top: 80px; 
+  right: 6%;
   font-family: 'Jost';
   padding: 25px;
   background-color: #f2f5f7;
@@ -91,13 +134,9 @@ const Ul = styled.ul`
     text-align: center;
     list-style-type: none;
     transition: all 0.3s ease;
-    
   }
   & li:hover {color: #38930d;}
-
-  &.active {
-    display: block;
-  }
+  &.active {display: block;}
 `
 
 const Header = () => {
@@ -108,22 +147,24 @@ const Header = () => {
   return (
     <HeaderStyle>
       <Link to='/'>
-        <Box>
-          <Title>CarLogo</Title>
+        <BoxFlex style={{color: '#fff'}}>
+          <Title className='max'>CarLogo</Title>
+          <Title className='min'>CL</Title>
           <TextLogo>
             справочник
             <br /> автомобильных марок
           </TextLogo>
-        </Box>
+        </BoxFlex>
       </Link>
-      <Box>
-      <Box>
+      <BoxFlex style={{color: '#fff'}}>
+        {/*
         <Form>
           <SearchBar type='text' placeholder='Искать...' />
           <ButtonMagnifier type='submit'>
             <MagnifierSvg />
           </ButtonMagnifier>
         </Form>
+        */}
         {currentUser ? (
           <>
             <Button onClick={() => { setFlag(!flag) }}>
@@ -148,8 +189,7 @@ const Header = () => {
             <LogInSvg />
           </Link>
         )}
-      </Box>
-      </Box>
+      </BoxFlex>
     </HeaderStyle>
   );
 };
