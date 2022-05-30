@@ -10,19 +10,29 @@ import { BoxAuthorization,  BoxFlex} from "../../styled";
 const Title = styled.h1`
   padding-right: 16px;
   font-family: 'Josefin Slab';
-  font-size: 64px;
   font-weight: 400;
   line-height: 64px;
   letter-spacing: 0em;
   text-align: left;
   color: #fff;
+  @media (max-width: 475px) {
+    font-size: 54px;
+  }
+  @media (min-width: 476px) {
+    font-size: 64px;
+  }
 `;
 const TextLogo = styled.p`
   font-family: 'Jura';
-  font-size: 14px;
   font-weight: 500;
   line-height: 19px;
   color: #fff;
+  @media (max-width: 475px) {
+    font-size: 9px;
+  }
+  @media (min-width: 476px) {
+    font-size: 14px;
+  }
 `;
 const Container = styled.div`
   display: flex;
@@ -33,10 +43,15 @@ const Container = styled.div`
 `;
 const BoxList = styled.div`
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
   font-family: 'Jura';
+  @media (max-width: 475px) {
+    flex-direction: column;
+  }
+  @media (min-width: 476px) {
+    flex-direction: row;
+  }
 `;
 const P = styled.p`
   font-size: 24px;
@@ -55,6 +70,12 @@ const Hr = styled.hr`
   margin: 10px 0px 20px 0px;
 	border: none;
 	border-bottom: 1px solid #000;
+  @media (max-width: 475px) {
+    font-size: 9px;
+  }
+  @media (min-width: 476px) {
+    font-size: 14px;
+  }
 `;
 
 function Reset() {

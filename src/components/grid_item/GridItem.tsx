@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { device } from "../../styled";
 import { ReactComponent as LikeSvg } from '../.././svg/like.svg';
 import { useEffect, useState } from 'react';
 import { getBrands } from '../.././api/service/brands/brands';
@@ -11,10 +11,32 @@ import { updateLikes } from '../../api/service/users/users';
 import useFilter from '../../context/Filter/hooks/userFilter';
 
 const Grid = styled.div`
-  margin: 20px 10%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  grid-auto-rows: minmax(240px, 1fr);
+  margin: 20px 10%;
+  @media ${device.mobileSS} {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-auto-rows: minmax(120px, 1fr);
+  }
+  @media ${device.mobileS} {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-auto-rows: minmax(120px, 1fr);
+  }
+  @media ${device.mobileM} {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-auto-rows: minmax(120px, 1fr);
+  }
+  @media ${device.mobileL} {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-auto-rows: minmax(120px, 1fr);
+  }
+  @media ${device.tablet} {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-auto-rows: minmax(240px, 1fr);
+  }
+  @media ${device.laptop} {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-auto-rows: minmax(240px, 1fr);
+  }
 `;
 
 const Element = styled.div`
@@ -33,15 +55,32 @@ const Element = styled.div`
       transform: translateY(-50%);
       font-family: 'Jura';
       color: #d9e2e7;
-      font-size: 120px;
+
+      @media ${device.mobileSS} {
+        font-size: 70px;
+      }
+      @media ${device.mobileS} {
+        font-size: 70px;
+      }
+      @media ${device.tablet} {
+        font-size: 120px;
+      }
     }
   }
 `;
 const Text = styled.p`
-  font-size: 21px;
   color: #007934;
   text-align: center;
   font-family: 'Jost';
+  @media ${device.mobileSS} {
+    font-size: 18px;
+  }
+  @media ${device.mobileS} {
+    font-size: 18px;
+  }
+  @media ${device.tablet} {
+    font-size: 21px;
+  }
 `;
 const Wrapper = styled.div`
   display: flex;
@@ -49,13 +88,29 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 const Img = styled.img`
-  width: 200px;
   margin: 5px;
+  @media ${device.mobileSS} {
+    width: 100px;
+  }
+  @media ${device.mobileS} {
+    width: 100px;
+  }
+  @media ${device.tablet} {
+    width: 200px;
+  }
 `;
 const Like = styled.div`
   position: absolute;
   bottom: 5px;
-  left: 80%;
+  @media ${device.mobileSS} {
+    left: 65%;
+  }
+  @media ${device.mobileS} {
+    left: 65%;
+  }
+  @media ${device.tablet} {
+    left: 80%;
+  }
 `;
 
 const P = styled.p`

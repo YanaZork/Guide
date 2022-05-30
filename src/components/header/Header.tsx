@@ -103,14 +103,11 @@ const LogIn = styled.p`
     font-size: 14px;
   }
   @media ${device.mobileL} {
-    font-size: 18px;
-  }
-  @media ${device.laptop} {
     font-size: 24px;
   }
   @media ${device.desktop} {
     font-size: 32px;
-  } 
+  }
 `;
 const Button = styled.button`
   display: flex;
