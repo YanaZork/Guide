@@ -175,7 +175,7 @@ const Header = () => {
                   :
                   <Link to='/favourites'>Избранное</Link>
               }</li>
-              <li><Link to='/'>Пройти тест</Link></li>
+              <li><Link to='/testing'>Пройти тест</Link></li>
               <hr />
               <li><Link to='/' onClick={() => { onLogout() }}>Выход</Link></li>
             </Ul>

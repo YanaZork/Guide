@@ -134,9 +134,10 @@ const GridItem = () => {
       setBrands(resp)
     });
   }, []);
-
   useEffect(() => {
-    if (filterValue) {
+    if (filterValue && filterValue.indexOf('автомобили') > 0) {
+      setBrands(initialBrands.filter(brand => brand.info.category.indexOf(filterValue) === 0));
+    } else if (filterValue) {
       setBrands(initialBrands.filter(brand => brand.name.indexOf(filterValue) === 0));
     } else {
       setBrands(initialBrands);
@@ -169,7 +170,13 @@ const GridItem = () => {
     },
     [currentUser]
   );
-
+/*
+    console.log(brands);
+    let sort = brands.sort((a, b) => {
+        a.info.category
+    })
+    console.log(sort)
+*/
   let letter = '';
   const SortAlph = brands.map((brand) => {
     if (letter !== brand.name.charAt(0)) {

@@ -7,7 +7,7 @@ import Reset from './components/authorization/Reset';
 import Authorization from './components/authorization';
 import { AuthProvider } from './context/Auth/AuthContext';
 import Favourites from './pages/Favourites/Favourites';
-
+import Testing from './pages/Testing';
 
 function App() {
   const firebaseApp = useMemo(() => {
@@ -28,6 +28,7 @@ function App() {
         <Route path='authorization' element={<Authorization />} />
         <Route path='reset' element={<Reset />} />
         <Route path='favourites' element={<Favourites />}/>
+        <Route path='testing' element={<Testing />}/>
         <Route path="*" element={<Home />} />
       </Routes>
     </AuthProvider>
