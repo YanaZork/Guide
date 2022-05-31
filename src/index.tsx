@@ -1,8 +1,7 @@
 import { createRoot } from "react-dom/client";
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
-
+import { HashRouter } from "react-router-dom";
 import { createGlobalStyle } from 'styled-components'
 import '@fontsource/jost';
 import '@fontsource/josefin-slab';
@@ -24,10 +23,10 @@ const rootElement = document!.getElementById("root");
 const root = createRoot(rootElement as HTMLElement);
 
 root.render(
-  <BrowserRouter>
+  <HashRouter>
     <Global />
     <App />
-  </BrowserRouter>
+  </HashRouter>
 );
 
 reportWebVitals();
