@@ -105,13 +105,6 @@ const Like = styled.div`
   }
 `;
 
-const P = styled.p`
-  font-family: 'Jura';
-  color: #d9e2e7;
-  font-size: 60px;
-  text-align: center;
-`
-
 
 function GridItemFlag () {
   const [brands, setBrands] = useState<Brand[]>([]);
@@ -132,6 +125,7 @@ function GridItemFlag () {
     } else {
       setBrands(initialBrands);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterValue]);
 
   const onLike = useCallback(
