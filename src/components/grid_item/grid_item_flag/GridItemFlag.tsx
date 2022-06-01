@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { device } from '../../../styled';
 import { ReactComponent as LikeSvg } from '../../../svg/like.svg';
 import { useEffect, useState } from 'react';
 import { getBrands } from '../../../api/service/brands/brands';
@@ -10,26 +9,20 @@ import useAuth from '../../../context/Auth/hooks/useAuth';
 import { updateLikes } from '../../../api/service/users/users';
 import useFilter from '../../../context/Filter/hooks/userFilter';
 import { flags } from '../../../mock/data_flag';
+import { device } from '../../../styled';
+import { Grid, Wrapper, Text, Like, Img } from '../../../styled';
 
-const Grid = styled.div`
-  display: grid;
-  margin: 20px 10%;
+const Flag = styled.img`
+  text-align: center;
   @media ${device.mobileSS} {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    grid-auto-rows: minmax(120px, 1fr);
+    width: 100px;
   }
   @media ${device.mobileS} {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    grid-auto-rows: minmax(120px, 1fr);
+    width: 100px;
   }
   @media ${device.tablet} {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    grid-auto-rows: minmax(240px, 1fr);
+    width: 150px;
   }
-`;
-const Flag = styled.img`
-  padding: 5px;
-  cursor: pointer;
 `;
 const Element = styled.div`
   margin: -1px;
@@ -37,80 +30,42 @@ const Element = styled.div`
   border: 2px solid #aaa;
   position: relative;
   cursor: pointer;
+
+
+
   &.separator {
+    cursor: default;
     background-color: #f2f5f7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     grid-column: 1;
     & p {
       position: relative;
       text-align: center;
-      top: 45%;
-      transform: translateY(-50%);
       font-family: 'Jura';
       color: #d9e2e7;
 
       @media ${device.mobileSS} {
-        font-size: 70px;
+        font-size: 26px;
       }
       @media ${device.mobileS} {
-        font-size: 70px;
+        font-size: 26px;
       }
       @media ${device.tablet} {
-        font-size: 120px;
+        font-size: 46px;
       }
     }
   }
 `;
-const Text = styled.p`
-  color: #007934;
-  text-align: center;
-  font-family: 'Jost';
-  @media ${device.mobileSS} {
-    font-size: 18px;
-  }
-  @media ${device.mobileS} {
-    font-size: 18px;
-  }
-  @media ${device.tablet} {
-    font-size: 21px;
-  }
-`;
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const Img = styled.img`
-  margin: 5px;
-  @media ${device.mobileSS} {
-    width: 100px;
-  }
-  @media ${device.mobileS} {
-    width: 100px;
-  }
-  @media ${device.tablet} {
-    width: 200px;
-  }
-`;
-const Like = styled.div`
-  position: absolute;
-  bottom: 5px;
-  @media ${device.mobileSS} {
-    left: 65%;
-  }
-  @media ${device.mobileS} {
-    left: 65%;
-  }
-  @media ${device.tablet} {
-    left: 80%;
-  }
-`;
-
 
 function GridItemFlag () {
   const [brands, setBrands] = useState<Brand[]>([]);
   const [initialBrands, setInitialBrands] = useState<Brand[]>([]);
   const { currentUser, updateUser } = useAuth();
   const { filterValue } = useFilter();
+
   const Sort = brands.sort((a, b) => a.info.category > b.info.category ? 1 : -1)
   useEffect(() => {
     getBrands().then((resp) => {

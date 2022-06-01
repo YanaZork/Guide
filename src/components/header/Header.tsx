@@ -139,7 +139,6 @@ const Ul = styled.ul`
 const Header = () => {
   const { currentUser, logout } = useAuth();
   const onLogout = () => {logout();}
-  const linkNow = window.location.pathname;
   const [flag, setFlag] = useState(false);
   return (
     <HeaderStyle>
@@ -169,12 +168,8 @@ const Header = () => {
               <LogInSvg />
             </Button>
             <Ul className={flag ? 'active' : ''}>
-              <li>{
-                (linkNow === '/favourites') ?
-                  <Link to='/'>Главная</Link>
-                  :
-                  <Link to='/favourites'>Избранное</Link>
-              }</li>
+              <li><Link to='/'>Главная</Link></li>
+              <li><Link to='/favourites'>Избранное</Link></li>
               <li><Link to='/testing'>Пройти тест</Link></li>
               <hr />
               <li><Link to='/' onClick={() => { onLogout() }}>Выход</Link></li>
