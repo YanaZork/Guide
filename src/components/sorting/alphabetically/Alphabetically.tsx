@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import GridItem from '../../grid_item';
+import GridItemAlph from '../../grid_item/grid_item_alph';
 import useFilter from '../../../context/Filter/hooks/userFilter';
 import { device } from '../../../styled'
 
@@ -90,7 +90,7 @@ const Alphabetically = () => {
           Все марки
         </P>
       </BoxFlex>
-      <GridItem />
+      <GridItemAlph />
     </>
   );
 };

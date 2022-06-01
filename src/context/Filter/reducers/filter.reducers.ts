@@ -9,7 +9,7 @@ const filterReducer = (state: FilterStateModel, action: FilterAction): FilterSta
                 by: action.payload,
             };
         case 'SET_FILTER_VALUE':
-            console.log('SET_FILTER_VALUE', action.payload)
+            // console.log('SET_FILTER_VALUE', action.payload)
             return {
                 ...state,
                 filter: action.payload,

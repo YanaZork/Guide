@@ -1,14 +1,15 @@
 import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { device } from "../../styled";
-import { ReactComponent as LikeSvg } from '../.././svg/like.svg';
+import { device } from '../../../styled';
+import { ReactComponent as LikeSvg } from '../../../svg/like.svg';
 import { useEffect, useState } from 'react';
-import { getBrands } from '../.././api/service/brands/brands';
-import { Brand } from '../.././types/Brand';
-import useAuth from '../../context/Auth/hooks/useAuth';
-import { updateLikes } from '../../api/service/users/users';
-import useFilter from '../../context/Filter/hooks/userFilter';
+import { getBrands } from '../../../api/service/brands/brands';
+import { Brand } from '../../../types/Brand';
+import useAuth from '../../../context/Auth/hooks/useAuth';
+import { updateLikes } from '../../../api/service/users/users';
+import useFilter from '../../../context/Filter/hooks/userFilter';
+import { flags } from '../../../mock/data_flag';
 
 const Grid = styled.div`
   display: grid;
@@ -21,24 +22,15 @@ const Grid = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     grid-auto-rows: minmax(120px, 1fr);
   }
-  @media ${device.mobileM} {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    grid-auto-rows: minmax(120px, 1fr);
-  }
-  @media ${device.mobileL} {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    grid-auto-rows: minmax(120px, 1fr);
-  }
   @media ${device.tablet} {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     grid-auto-rows: minmax(240px, 1fr);
   }
-  @media ${device.laptop} {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    grid-auto-rows: minmax(240px, 1fr);
-  }
 `;
-
+const Flag = styled.img`
+  padding: 5px;
+  cursor: pointer;
+`;
 const Element = styled.div`
   margin: -1px;
   background: #fff;
@@ -121,28 +113,25 @@ const P = styled.p`
 `
 
 
-const GridItem = () => {
-  const [initialBrands, setInitialBrands] = useState<Brand[]>([]);
+function GridItemFlag () {
   const [brands, setBrands] = useState<Brand[]>([]);
-
+  const [initialBrands, setInitialBrands] = useState<Brand[]>([]);
   const { currentUser, updateUser } = useAuth();
   const { filterValue } = useFilter();
-
+  const Sort = brands.sort((a, b) => a.info.category > b.info.category ? 1 : -1)
   useEffect(() => {
     getBrands().then((resp) => {
       setInitialBrands(resp);
       setBrands(resp)
     });
   }, []);
+
   useEffect(() => {
-    if (filterValue && filterValue.indexOf('автомобили') > 0) {
+    if (filterValue) {
       setBrands(initialBrands.filter(brand => brand.info.category.indexOf(filterValue) === 0));
-    } else if (filterValue) {
-      setBrands(initialBrands.filter(brand => brand.name.indexOf(filterValue) === 0));
     } else {
       setBrands(initialBrands);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterValue]);
 
   const onLike = useCallback(
@@ -170,22 +159,19 @@ const GridItem = () => {
     },
     [currentUser]
   );
-/*
-    console.log(brands);
-    let sort = brands.sort((a, b) => {
-        a.info.category
-    })
-    console.log(sort)
-*/
-  let letter = '';
-  const SortAlph = brands.map((brand) => {
-    if (letter !== brand.name.charAt(0)) {
-      letter = brand.name.charAt(0);
 
+  let country = '';
+ 
+  const SortFlag = Sort.map((brand) => {
+
+    if (country !== brand.info.category) {
+      country = brand.info.category;
+      let flagNow = flags.find(f => f.name === country);
       return (
         <React.Fragment key={brand.name}>
           <Element className='separator'>
-            <p>{letter}</p>
+            <Flag src={flagNow?.img} alt={flagNow?.name} />
+            <p>{flagNow?.title}</p>
           </Element>
           <Element>
             <Link to={brand.name}>
@@ -205,6 +191,7 @@ const GridItem = () => {
         </React.Fragment>
       );
     }
+
     return (
       <Element key={brand.name}>
         <Link to={brand.name}>
@@ -224,85 +211,15 @@ const GridItem = () => {
     );
   });
 
-  return <Grid>{SortAlph}</Grid>;
-};
-
-const GridItemLike = () => {
-  const [brands, setBrands] = useState<Brand[]>([]);
-
-  const { currentUser, updateUser } = useAuth();
-
-  useEffect(() => {
-    getBrands().then((resp) => {
-      setBrands(resp)
-    });
-  }, []);
-
-  const onLike = useCallback(
-    async (event: React.MouseEvent<HTMLElement>, brand: Brand) => {
-      event.preventDefault();
-      if (currentUser) {
-        const newLikes = await updateLikes(currentUser?.uid, brand.name);
-        updateUser(newLikes);
-      }
-    },
-    [currentUser, updateUser]
-  );
-
-  const getColor = useCallback(
-    (like: string) => {
-      if (
-        currentUser &&
-        currentUser.likes &&
-        currentUser?.likes?.indexOf(like) !== -1
-      ) {
-        return '#FF4141';
-      }
-
-      return '#C4C4C4';
-    },
-    [currentUser]
-  );
-
-  let counter = 0;
-  const SortFav = brands.map((brand) => {
-    if (getColor(brand.name) === '#FF4141') {
-      counter += 1;
-      return (
-        <Element key={brand.name}>
-          <Link to={`/${brand.name}`}>
-            <Text>{brand.name}</Text>
-            <Wrapper>
-              <Img src={brand.logo} />
-            </Wrapper>
-            <Like
-              onClick={(event: React.MouseEvent<HTMLElement>) => {
-                onLike(event, brand);
-              }}
-            >
-              <LikeSvg fill={getColor(brand.name)} />
-            </Like>
-          </Link>
-        </Element>
-      );
-    } else {
-      return(<React.Fragment key={brand.name}></React.Fragment>)
-    }
-  });
-
   return (
     <>
-      {counter === 0 ?
-        <>
-          <P>Ваше избранное пустое</P>
-        </>
-        :
-        <Grid>{SortFav}</Grid>
-      }
+      <Grid>
+        {SortFlag}
+      </Grid>
     </>
   );
 }
 
-export default GridItem;
+export default GridItemFlag;
 
-export { GridItemLike };
+
