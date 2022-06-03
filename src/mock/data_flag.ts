@@ -5,7 +5,7 @@ export const flags = [
       img: 'https://firebasestorage.googleapis.com/v0/b/carlogo-30ae8.appspot.com/o/flags-svg%2F%D0%90%D0%BC%D0%B5%D1%80%D0%B8%D0%BA%D0%B0%D0%BD%D1%81%D0%BA%D0%B8%D0%B5%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D0%B8.svg?alt=media&token=1b361550-50ef-49ab-871d-c3c8431fc4ea'
     },
     {
-      title: 'Англия',
+      title: 'Великобритания',
       name: 'Английские автомобили',
       img: 'https://firebasestorage.googleapis.com/v0/b/carlogo-30ae8.appspot.com/o/flags-svg%2F%D0%90%D0%BD%D0%B3%D0%BB%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B5%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D0%B8.svg?alt=media&token=030cb35c-432e-4287-8d27-24ec200a96cc'
     },

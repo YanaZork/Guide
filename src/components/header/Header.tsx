@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import { useLocation } from 'react-router-dom'
 import { ReactComponent as LogInSvg } from '../../svg/login.svg';
 //import { ReactComponent as MagnifierSvg } from '../../svg/magnifier.svg';
 import { Link } from 'react-router-dom';
@@ -97,12 +97,22 @@ const LogIn = styled.p`
   margin-right: 5px;
   color: #fff;
   @media ${device.mobileSS} {
-    font-size: 14px;
+    font-size: 8px;
+    &.max {display:none;}
   }
   @media ${device.mobileS} {
-    font-size: 14px;
+    font-size: 10px;
+    &.max {display:none;}
+  }
+  @media ${device.mobileM} {
+    font-size: 10px;
   }
   @media ${device.mobileL} {
+    font-size: 18px;
+    &.min {display:none;}
+    &.max {display:block;}
+  }
+  @media ${device.tablet} {
     font-size: 24px;
   }
   @media ${device.desktop} {
@@ -119,6 +129,7 @@ const Button = styled.button`
 const Ul = styled.ul`
   position: absolute;
   display: none;
+  text-align: center;
   top: 80px; 
   right: 6%;
   font-family: 'Jost';
@@ -138,12 +149,13 @@ const Ul = styled.ul`
 
 const Header = () => {
   const { currentUser, logout } = useAuth();
-  const onLogout = () => {logout();}
+  const onLogout = () => { logout(); }
+  const location = useLocation();
   const [flag, setFlag] = useState(false);
   return (
     <HeaderStyle>
       <Link to='/'>
-        <BoxFlex style={{color: '#fff'}}>
+        <BoxFlex style={{ color: '#fff' }}>
           <Title className='max'>CarLogo</Title>
           <Title className='min'>CL</Title>
           <TextLogo>
@@ -152,7 +164,7 @@ const Header = () => {
           </TextLogo>
         </BoxFlex>
       </Link>
-      <BoxFlex style={{color: '#fff'}}>
+      <BoxFlex style={{ color: '#fff'}}>
         {/*
         <Form>
           <SearchBar type='text' placeholder='Искать...' />
@@ -168,18 +180,32 @@ const Header = () => {
               <LogInSvg />
             </Button>
             <Ul className={flag ? 'active' : ''}>
-              <li><Link to='/'>Главная</Link></li>
-              <li><Link to='/favourites'>Избранное</Link></li>
+              {console.log()}
+              <li>{
+                (location.pathname === '/favourites') ?
+                  <Link to='/'>Главная</Link>
+                  :
+                  <Link to='/favourites'>Избранное</Link>
+              }</li>
+              {/* 
               <li><Link to='/testing'>Пройти тест</Link></li>
+              */}
+              <hr />
+              <Link to='about' >О нас</Link>
               <hr />
               <li><Link to='/' onClick={() => { onLogout() }}>Выход</Link></li>
             </Ul>
           </>
         ) : (
-          <Link to='/authorization' style={{ display: 'flex', alignItems: 'center' }}>
-            <LogIn>Войти</LogIn>
-            <LogInSvg />
-          </Link>
+          <>
+            <Link to='about' style={{ display: 'flex', alignItems: 'center' }}>
+            <LogIn>О нас</LogIn>
+            </Link>
+            <Link to='/authorization' style={{ display: 'flex', alignItems: 'center' }}>
+              <LogIn className='max' style={{ marginLeft:'15px' }}>Войти</LogIn>
+              <LogInSvg />
+            </Link>
+          </>
         )}
       </BoxFlex>
     </HeaderStyle>

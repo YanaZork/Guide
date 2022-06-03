@@ -45,16 +45,16 @@ const Element = styled.div`
       position: relative;
       text-align: center;
       font-family: 'Jura';
-      color: #d9e2e7;
+      color: #c0c7ca;
 
       @media ${device.mobileSS} {
-        font-size: 26px;
+        font-size: 17px;
       }
       @media ${device.mobileS} {
-        font-size: 26px;
+        font-size: 17px;
       }
       @media ${device.tablet} {
-        font-size: 46px;
+        font-size: 28px;
       }
     }
   }
